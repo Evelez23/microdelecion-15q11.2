@@ -1,0 +1,22 @@
+:root {
+  /* ===== PALETA CIENTÍFICA ===== */
+  --dna-helix: #3a86ff;
+  --gene-1: #ff006e;
+  --gene-2: #8338ec;
+  
+  /* ===== MODO CLARO (default) ===== */
+  --bg-primary: #f8f9fa;
+  --text-primary: #212529;
+  --card-bg: #ffffff;
+  
+  /* ===== TIPOGRAFÍA ===== */
+  --font-sans: 'Inter', -apple-system, sans-serif;
+  --font-mono: 'Roboto Mono', monospace;
+}
+
+/* ===== MODO OSCURO ===== */
+[data-theme="dark"] {
+  --bg-primary: #0a0a0a;
+  --text-primary: #e9ecef;
+  --card-bg: #1e1e1e;
+}
