@@ -2,32 +2,35 @@
 <html lang="es" data-theme="light">
 <head>
   <!-- Metadatos optimizados -->
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   <title>Microdeleción 15q11.2 | Portal Colaborativo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Investigación abierta sobre microdeleciones cromosómicas. ¡Colabora!">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Investigación abierta sobre microdeleciones cromosómicas. ¡Colabora!" />
   
+  <!-- Content Security Policy ajustada -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:;" />
+
   <!-- Preload crítico -->
-  <link rel="preload" href="css/main.css" as="style">
-  <link rel="preload" href="js/theme-switcher.js" as="script">
-  
+  <link rel="preload" href="./css/main.css" as="style" />
+  <link rel="preload" href="./js/theme-switcher.js" as="script" />
+
   <!-- Estilos -->
-  <link rel="stylesheet" href="css/main.css">
-  <link rel="icon" href="assets/icons/dna.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./css/main.css" />
+  <link rel="icon" href="./assets/icons/dna.svg" type="image/svg+xml" />
 </head>
 
 <body>
   <!-- Header animado -->
   <header class="sticky-header">
     <div class="header-content">
-      <a href="/" class="logo">
+      <a href="./" class="logo">
         <svg class="dna-icon">...</svg>
         <span>15q11.2 Research</span>
       </a>
       
       <nav aria-label="Principal">
         <button id="theme-toggle" aria-label="Cambiar modo oscuro/claro">🌓</button>
-        <a href="form.html" class="nav-button pulse">➕ Nuevo Caso</a>
+        <a href="./form.html" class="nav-button pulse">➕ Nuevo Caso</a>
       </nav>
     </div>
     
@@ -39,7 +42,7 @@
   <section class="hero">
     <div class="hero-video">
       <video autoplay muted loop playsinline>
-        <source src="assets/videos/dna-abstract.mp4" type="video/mp4">
+        <source src="./assets/videos/dna-abstract.mp4" type="video/mp4" />
       </video>
     </div>
     
@@ -48,7 +51,7 @@
       <p>Cada aporte acerca la cura. Registra tu caso y sé parte del cambio.</p>
       
       <div class="cta-buttons">
-        <a href="form.html" class="cta-primary">Contribuir</a>
+        <a href="./form.html" class="cta-primary">Contribuir</a>
         <a href="#casos-recientes" class="cta-secondary">Ver historias</a>
       </div>
     </div>
@@ -101,8 +104,8 @@
   </footer>
 
   <!-- Scripts -->
-  <script src="js/particles.js" defer></script>
-  <script src="js/counters.js" defer></script>
-  <script src="js/gene-simulator.js" type="module"></script>
+  <script src="./js/particles.js" defer></script>
+  <script src="./js/counters.js" defer></script>
+  <script src="./js/gene-simulator.js" type="module"></script>
 </body>
 </html>
