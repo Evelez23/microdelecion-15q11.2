@@ -1,0 +1,15 @@
+[
+  {
+    "Nombre": "Naroa Torrejón Bausan",
+    "Edad": 10,
+    "Género": "F",
+    "Pruebas realizadas": "analítica genética,renonacias,encefalogramas...",
+    "síntomas principales": "TEA (Trastorno del Espectro Autista);TDAH...",
+    "Nivel de afectación": "Moderado",
+    "Medicamentos actuales/pasados": "Briviac 50mg cada 12h noiafrem 5mg cada 24h",
+    "Terapias recibidas": "Logopeda,psicoterapia",
+    "Participación en estudios": "SI",
+    "Necesidades": "Acceso a especialistas;Educación inclusiva..."
+  },
+  // ... todos los demás pacientes
+]
