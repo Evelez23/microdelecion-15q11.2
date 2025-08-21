@@ -141,7 +141,7 @@ function getBandera(pais) {
     'españa': '🇪🇸', 'espana': '🇪🇸', 'spain': '🇪🇸',
     'andalucía': '🇪🇸', 'andalucia': '🇪🇸', 'malaga': '🇪🇸',
     'madrid': '🇪🇸', 'barcelona': '🇪🇸', 'valencia': '🇪🇸',
-    'sevilla': '🇪🇸', 'bilbao': '🇪🇸', 'granada': '🇪🇸',
+    'sevilla': '🇪🇸', 'bilbao': '🇪🇸', 'granada': '🇪🇸','Segovia': '🇪🇸','Alicante': '🇪🇸','Zaragoza': '🇪🇸','Murcia': '🇪🇸',
     
     // Latinoamérica
     'argentina': '🇦🇷', 'buenos aires': '🇦🇷', 'córdoba': '🇦🇷',
