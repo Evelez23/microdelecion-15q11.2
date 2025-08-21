@@ -602,5 +602,30 @@ blockquote {
   }
 }
 }
+.pintura-oleo {
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  max-width: 100%;
+  height: auto;
+}
 
+.pie-foto {
+  text-align: center;
+  font-style: italic;
+  color: var(--muted);
+  margin-top: 10px;
+  font-size: 0.9em;
+}
+
+.panel-inspiracion {
+  background: linear-gradient(135deg, rgba(110, 168, 254, 0.1), rgba(99, 230, 190, 0.1));
+  border-left: 4px solid var(--primary);
+}
+
+.inspiracion {
+  font-style: italic;
+  margin-top: 10px;
+  opacity: 0.8;
+}
 
