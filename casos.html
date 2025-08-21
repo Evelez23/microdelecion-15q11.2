@@ -1,0 +1,76 @@
+  <div class="code-container">
+                <div class="code-header">
+                    <h3>casos.html</h3>
+                    <div class="code-tabs">
+                        <div class="code-tab active" onclick="showCode('casos-html')">HTML</div>
+                    </div>
+                </div>
+                <div id="casos-html" class="code-content active">
+&lt;!doctype html&gt;
+&lt;html lang="es"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"/&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"/&gt;
+  &lt;title&gt;Casos Registrados | Microdeleción 15q11.2&lt;/title&gt;
+  &lt;meta name="description" content="Base de datos de casos de microdeleción 15q11.2 reportados por familias"&gt;
+  &lt;link rel="stylesheet" href="styles.css"/&gt;
+  &lt;script defer src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"&gt;&lt;/script&gt;
+  &lt;script defer src="scripts.js"&gt;&lt;/script&gt;
+  &lt;script defer src="casos.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;nav class="nav"&gt;
+    &lt;div class="inner"&gt;
+      &lt;div class="brand"&gt;
+        &lt;img class="logo" src="https://raw.githubusercontent.com/Evelez23/-microdelecion/refs/heads/main/img/logo%20micro1.png" alt="Logo Microdeleción 15q11.2"&gt;
+        &lt;div&gt;Microdeleción 15q11.2&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="nav-links"&gt;
+        &lt;a href="index.html"&gt;Inicio&lt;/a&gt;
+        &lt;a href="resumen.html"&gt;Resumen&lt;/a&gt;
+        &lt;a href="casos.html"&gt;Casos&lt;/a&gt;
+        &lt;a href="genetica.html"&gt;Genética&lt;/a&gt;
+        &lt;a href="estadisticas.html"&gt;Estadísticas&lt;/a&gt;
+        &lt;a class="btn-agregar" href="formulario.html"&gt;Reportar caso&lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/nav&gt;
+
+  &lt;section class="container"&gt;
+    &lt;h1&gt;Casos Registrados&lt;/h1&gt;
+    &lt;p class="subtitle"&gt;Base de datos comunitaria de personas con microdeleción 15q11.2 reportados por familias&lt;/p&gt;
+
+    &lt;div class="controls"&gt;
+      &lt;input type="text" id="search" placeholder="Buscar casos por nombre, ubicación o síntomas..." aria-label="Buscar casos"&gt;
+      
+      &lt;select id="filtro-genero"&gt;
+        &lt;option value=""&gt;Todos los géneros&lt;/option&gt;
+        &lt;option value="m"&gt;Masculino&lt;/option&gt;
+        &lt;option value="f"&gt;Femenino&lt;/option&gt;
+      &lt;/select&gt;
+
+      &lt;select id="filtro-gravedad"&gt;
+        &lt;option value=""&gt;Todos los niveles&lt;/option&gt;
+        &lt;option value="leve"&gt;Leve&lt;/option&gt;
+        &lt;option value="moderado"&gt;Moderado&lt;/option&gt;
+        &lt;option value="severo"&gt;Severo&lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Casos Validados --&gt;
+    &lt;h2&gt;Casos Validados&lt;/h2&gt;
+    &lt;div id="casos-validados" class="listado-casos"&gt;&lt;/div&gt;
+
+    &lt;!-- Casos No Validados --&gt;
+    &lt;h2&gt;Casos No Validados&lt;/h2&gt;
+    &lt;div id="casos-no-validados" class="listado-casos"&gt;&lt;/div&gt;
+  &lt;/section&gt;
+
+  &lt;div class="disclaimer"&gt;
+    &lt;p&gt;🔒 &lt;strong&gt;Privacidad:&lt;/strong&gt; La información mostrada es de carácter general. Para proteger la privacidad, hemos omitido datos sensibles.&lt;/p&gt;
+  &lt;/div&gt;
+
+  &lt;footer class="footer"&gt;© 2025 | Comunidad de Familias 15q11.2&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                </div>
