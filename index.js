@@ -1,4 +1,4 @@
-// index.js
+// index.js - Versión mejorada con países
 async function initIndex() {
   const data = await loadDataset();
 
@@ -80,30 +80,40 @@ async function initIndex() {
     });
   }
 
-  // Chart: estado (validados vs no validados)
-  const origenEl = document.getElementById("chartOrigen");
-  if (origenEl) {
-    const ctxOrigen = origenEl.getContext("2d");
-    new Chart(ctxOrigen, {
-      type: "doughnut",
-      data: {
-        labels: ["Validados", "No validados"],
-        datasets: [{
-          data: [validados, noValidados],
-          backgroundColor: ["#59a14f", "#e15759"]
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: { legend: { position: "bottom" } }
+  // ---- Mapa de países ----
+  const paisesContainer = document.getElementById("paises-container");
+  if (paisesContainer) {
+    // Contar casos por país
+    const paisesCount = {};
+    data.forEach(c => {
+      const pais = (c.localizacion || "").trim();
+      if (pais && pais.toLowerCase() !== "no especificada") {
+        paisesCount[pais] = (paisesCount[pais] || 0) + 1;
       }
     });
+
+    // Ordenar por número de casos
+    const paisesOrdenados = Object.entries(paisesCount)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 12); // Top 12 países
+
+    if (paisesOrdenados.length > 0) {
+      paisesContainer.innerHTML = paisesOrdenados.map(([pais, count]) => `
+        <div class="pais-card">
+          <span class="bandera">${getBandera(pais)}</span>
+          <div class="pais-nombre">${acortarNombre(pais)}</div>
+          <div class="pais-casos">${count} caso${count !== 1 ? 's' : ''}</div>
+        </div>
+      `).join('');
+    } else {
+      paisesContainer.innerHTML = '<div class="pais-loading">No hay datos de países disponibles</div>';
+    }
   }
 
   // Animaciones
   if (window.anime) {
     anime({
-      targets: '.panel',
+      targets: '.panel, .pais-card',
       opacity: [0, 1],
       translateY: [20, 0],
       delay: anime.stagger(100),
@@ -111,6 +121,43 @@ async function initIndex() {
       easing: 'easeOutQuad'
     });
   }
+}
+
+// Función para obtener bandera por país
+function getBandera(pais) {
+  const banderas = {
+    'españa': '🇪🇸', 'spain': '🇪🇸', 'espana': '🇪🇸',
+    'méxico': '🇲🇽', 'mexico': '🇲🇽', 
+    'colombia': '🇨🇴',
+    'argentina': '🇦🇷',
+    'chile': '🇨🇱',
+    'perú': '🇵🇪', 'peru': '🇵🇪',
+    'venezuela': '🇻🇪',
+    'estados unidos': '🇺🇸', 'usa': '🇺🇸',
+    'canadá': '🇨🇦', 'canada': '🇨🇦',
+    'brasil': '🇧🇷',
+    'francia': '🇫🇷',
+    'alemania': '🇩🇪',
+    'italia': '🇮🇹',
+    'reino unido': '🇬🇧', 'uk': '🇬🇧',
+    'default': '🌍'
+  };
+
+  const paisLower = pais.toLowerCase();
+  return banderas[paisLower] || banderas[paisLower.replace(/\s+/g, '')] || banderas.default;
+}
+
+// Acortar nombres largos de países
+function acortarNombre(pais) {
+  const acortamientos = {
+    'estados unidos': 'EE.UU.',
+    'reino unido': 'R.U.',
+    'república dominicana': 'R.D.',
+    'default': pais.length > 12 ? pais.substring(0, 10) + '...' : pais
+  };
+
+  const paisLower = pais.toLowerCase();
+  return acortamientos[paisLower] || acortamientos.default;
 }
 
 document.addEventListener("DOMContentLoaded", initIndex);
