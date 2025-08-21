@@ -1,3 +1,4 @@
+// casos.js - Versión completa mejorada
 async function initCasos() {
   const data = await loadDataset();
 
@@ -21,7 +22,7 @@ async function initCasos() {
     if (!texto || texto === "No especificado") return "No especificado";
     if (texto.includes(";")) {
       const items = texto.split(";").map(t => t.trim()).filter(t => t.length > 0);
-      return "&lt;ul&gt;" + items.map(i => `&lt;li&gt;${i}&lt;/li&gt;`).join("") + "&lt;/ul&gt;";
+      return "<ul>" + items.map(i => `<li>${i}</li>`).join("") + "</ul>";
     }
     return texto;
   }
@@ -31,34 +32,34 @@ async function initCasos() {
 
     if (casos.length === 0) {
       container.innerHTML = `
-        &lt;div class="panel" style="grid-column:1/-1"&gt;
-          &lt;p&gt;No se encontraron casos que coincidan con la búsqueda&lt;/p&gt;
-        &lt;/div&gt;
+        <div class="panel" style="grid-column:1/-1">
+          <p>No se encontraron casos que coincidan con la búsqueda</p>
+        </div>
       `;
       return;
     }
 
     const casosHTML = casos.map((caso, i) => `
-      &lt;div class="panel"&gt;
-        &lt;div class="panel-header toggle" data-id="${i}"&gt;
-          &lt;div class="panel-title"&gt;
-            &lt;h3&gt;${iconoGeneroEdad(caso.genero, caso.edad)} ${caso.nombre || 'Nombre no disponible'}&lt;/h3&gt;
-            &lt;span class="${gravBadge(caso.gravedad)}"&gt;${caso.gravedad || 'No especificado'}&lt;/span&gt;
-          &lt;/div&gt;
-          &lt;span class="arrow"&gt;▶&lt;/span&gt;
-        &lt;/div&gt;
-        &lt;div class="panel-body" style="max-height:0; overflow:hidden; transition:max-height 0.4s ease;"&gt;
-          &lt;p&gt;&lt;strong&gt;Nivel de afectación:&lt;/strong&gt; ${caso.gravedad || 'No especificado'}&lt;/p&gt;
-          &lt;p&gt;&lt;strong&gt;Edad:&lt;/strong&gt; ${caso.edad || 'No especificado'} años&lt;/p&gt;
-          &lt;p&gt;&lt;strong&gt;Género:&lt;/strong&gt; ${caso.genero || 'No especificado'}&lt;/p&gt;
-          &lt;p&gt;&lt;strong&gt;Ubicación:&lt;/strong&gt; ${caso.localizacion || 'No especificada'}&lt;/p&gt;
-          &lt;p&gt;&lt;strong&gt;Pruebas realizadas:&lt;/strong&gt; ${formatearLista(caso.pruebas)}&lt;/p&gt;
-          &lt;p&gt;&lt;strong&gt;Síntomas:&lt;/strong&gt; ${formatearLista(caso.sintomas)}&lt;/p&gt;
-          &lt;p&gt;&lt;strong&gt;Medicamentos:&lt;/strong&gt; ${formatearLista(caso.medicamentos)}&lt;/p&gt;
-          &lt;p&gt;&lt;strong&gt;Terapias:&lt;/strong&gt; ${formatearLista(caso.terapias)}&lt;/p&gt;
-          &lt;p&gt;&lt;strong&gt;Necesidades y Desafíos:&lt;/strong&gt; ${formatearLista(caso.desafios)}&lt;/p&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
+      <div class="panel">
+        <div class="panel-header toggle" data-id="${i}">
+          <div class="panel-title">
+            <h3>${iconoGeneroEdad(caso.genero, caso.edad)} ${caso.nombre || 'Nombre no disponible'}</h3>
+            <span class="${gravBadge(caso.gravedad)}">${caso.gravedad || 'No especificado'}</span>
+          </div>
+          <span class="arrow">▶</span>
+        </div>
+        <div class="panel-body" style="max-height:0; overflow:hidden; transition:max-height 0.4s ease;">
+          <p><strong>Nivel de afectación:</strong> ${caso.gravedad || 'No especificado'}</p>
+          <p><strong>Edad:</strong> ${caso.edad || 'No especificado'} años</p>
+          <p><strong>Género:</strong> ${caso.genero || 'No especificado'}</p>
+          <p><strong>Ubicación:</strong> ${caso.localizacion || 'No especificada'}</p>
+          <p><strong>Pruebas realizadas:</strong> ${formatearLista(caso.pruebas)}</p>
+          <p><strong>Síntomas:</strong> ${formatearLista(caso.sintomas)}</p>
+          <p><strong>Medicamentos:</strong> ${formatearLista(caso.medicamentos)}</p>
+          <p><strong>Terapias:</strong> ${formatearLista(caso.terapias)}</p>
+          <p><strong>Necesidades y Desafíos:</strong> ${formatearLista(caso.desafios)}</p>
+        </div>
+      </div>
     `).join('');
 
     container.innerHTML = casosHTML;
@@ -146,4 +147,3 @@ async function initCasos() {
 }
 
 document.addEventListener('DOMContentLoaded', initCasos);
-            
