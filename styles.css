@@ -628,4 +628,65 @@ blockquote {
   margin-top: 10px;
   opacity: 0.8;
 }
+/* Agregar esto a styles.css */
+.paises-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 15px;
+  padding: 15px 0;
+}
 
+.pais-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pais-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.bandera {
+  font-size: 2.5rem;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.pais-nombre {
+  font-weight: 600;
+  font-size: 0.9em;
+  margin-bottom: 5px;
+  color: var(--text);
+}
+
+.pais-casos {
+  font-size: 0.8em;
+  color: var(--muted);
+}
+
+.pais-loading {
+  text-align: center;
+  padding: 30px;
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* Para la pintura al óleo */
+.pintura-oleo {
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  max-width: 100%;
+  height: auto;
+}
+
+.pie-foto {
+  text-align: center;
+  font-style: italic;
+  color: var(--muted);
+  margin-top: 10px;
+  font-size: 0.9em;
+}
