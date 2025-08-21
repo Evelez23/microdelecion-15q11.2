@@ -1,9 +1,3 @@
-<div class="code-tabs">
-                        <div class="code-tab active" onclick="showCode('casos-js')">JavaScript</div>
-                    </div>
-                </div>
-                <div id="casos-js" class="code-content">
-// casos.js - Versión mejorada
 async function initCasos() {
   const data = await loadDataset();
 
@@ -152,5 +146,4 @@ async function initCasos() {
 }
 
 document.addEventListener('DOMContentLoaded', initCasos);
-                </div>
-            </div>
+            
