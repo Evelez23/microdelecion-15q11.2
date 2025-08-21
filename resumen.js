@@ -2,6 +2,18 @@
 async function initResumen() {
   const data = await loadDataset();
   
+  // Actualizar KPIs rápidos
+  document.getElementById('total-pacientes').textContent = data.length;
+  
+  const edades = data.map(r => Number(r.edad)).filter(e => e > 0);
+  const edadPromedio = edades.length > 0 ? Math.round(edades.reduce((a, b) => a + b, 0) / edades.length) : 0;
+  document.getElementById('edad-promedio').textContent = edadPromedio + ' años';
+  
+  const casosTEA = data.filter(r => (r.sintomas || '').toLowerCase().includes('tea')).length;
+  document.getElementById('sintoma-comun').textContent = Math.round((casosTEA / data.length) * 100) + '%';
+  
+  // ... resto del código de gráficos
+}
   // Distribución por grupos de edad
   const buckets = { 
     '0-5 años': 0, 
