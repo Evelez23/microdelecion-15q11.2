@@ -1,9 +1,4 @@
-  <div class="code-tabs">
-                        <div class="code-tab active" onclick="showCode('genetica-js')">JavaScript</div>
-                    </div>
-                </div>
-                <div id="genetica-js" class="code-content">
-// genetica.js - Versión mejorada
+ // genetica.js - Versión completa mejorada
 async function initGen() {
   // Gráfico de genes
   new Chart(document.getElementById('chartGenes').getContext('2d'), {
@@ -74,5 +69,3 @@ async function initGen() {
 }
 
 document.addEventListener('DOMContentLoaded', initGen);
-                </div>
-            </div>
