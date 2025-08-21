@@ -1,19 +1,27 @@
-// estadisticas.js - Versión completa mejorada
+// estadisticas.js - Versión mejorada
 async function initStats() {
   const data = await loadDataset();
   
   // Actualizar estadísticas generales
   document.getElementById('total-casos').textContent = data.length;
-  document.getElementById('casos-validados').textContent = data.filter(r => r.__origen === 'validado').length;
-  document.getElementById('casos-no-validados').textContent = data.filter(r => r.__origen === 'no_validado').length;
   
-  // Países únicos (excluyendo "No especificada")
+  const edadesValidas = data.map(r => Number(r.edad)).filter(e => e > 0);
+  const edadPromedio = edadesValidas.length > 0 ? 
+    Math.round(edadesValidas.reduce((a, b) => a + b, 0) / edadesValidas.length) : 0;
+  document.getElementById('edad-promedio').textContent = edadPromedio;
+  
+  // Países únicos
   const paisesSet = new Set(
     data
       .map(c => (c.localizacion || "").trim())
       .filter(p => p && p.toLowerCase() !== "no especificada")
   );
-  document.getElementById('total-paises').textContent = paisesSet.size;
+  document.getElementById('paises-total').textContent = paisesSet.size;
+  
+  // Tasa de validación
+  const validados = data.filter(r => r.__origen === 'validado').length;
+  const tasaValidacion = data.length > 0 ? Math.round((validados / data.length) * 100) : 0;
+  document.getElementById('validacion-rate').textContent = tasaValidacion + '%';
 
   // Gráfico de prevalencia de síntomas
   const defs = [
@@ -52,15 +60,22 @@ async function initStats() {
   });
 
   // Gráfico de distribución por sexo
-  const h = data.filter(r => (r.genero || '').toUpperCase() === 'MASCULINO' || (r.genero || '').toUpperCase() === 'M').length;
-  const m = data.filter(r => (r.genero || '').toUpperCase() === 'FEMENINO' || (r.genero || '').toUpperCase() === 'F').length;
+  const hombres = data.filter(r => 
+    (r.genero || '').toUpperCase() === 'MASCULINO' || 
+    (r.genero || '').toUpperCase() === 'M'
+  ).length;
+  
+  const mujeres = data.filter(r => 
+    (r.genero || '').toUpperCase() === 'FEMENINO' || 
+    (r.genero || '').toUpperCase() === 'F'
+  ).length;
 
   new Chart(document.getElementById('chartSexo').getContext('2d'), {
     type: 'doughnut',
     data: {
       labels: ['Masculino', 'Femenino'],
       datasets: [{
-        data: [h, m],
+        data: [hombres, mujeres],
         backgroundColor: [
           'rgba(110, 168, 254, 0.6)',
           'rgba(255, 107, 107, 0.6)'
@@ -78,7 +93,7 @@ async function initStats() {
   });
 
   // Gráfico de distribución por edad
-  const buckets = {
+  const bucketsEdad = {
     "0-5 años": 0,
     "6-12 años": 0,
     "13-18 años": 0,
@@ -89,22 +104,22 @@ async function initStats() {
   data.forEach(c => {
     const edad = parseInt(c.edad);
     if (!isNaN(edad)) {
-      if (edad <= 5) buckets["0-5 años"]++;
-      else if (edad <= 12) buckets["6-12 años"]++;
-      else if (edad <= 18) buckets["13-18 años"]++;
-      else buckets["19+ años"]++;
+      if (edad <= 5) bucketsEdad["0-5 años"]++;
+      else if (edad <= 12) bucketsEdad["6-12 años"]++;
+      else if (edad <= 18) bucketsEdad["13-18 años"]++;
+      else bucketsEdad["19+ años"]++;
     } else {
-      buckets["No especificada"]++;
+      bucketsEdad["No especificada"]++;
     }
   });
 
   new Chart(document.getElementById('chartEdad').getContext('2d'), {
     type: 'bar',
     data: {
-      labels: Object.keys(buckets),
+      labels: Object.keys(bucketsEdad),
       datasets: [{
         label: 'Número de casos',
-        data: Object.values(buckets),
+        data: Object.values(bucketsEdad),
         backgroundColor: 'rgba(0, 209, 209, 0.6)'
       }]
     },
@@ -122,10 +137,122 @@ async function initStats() {
     }
   });
 
+  // Mapa de países
+  const paisesContainer = document.getElementById('paises-container');
+  if (paisesContainer) {
+    // Contar casos por país detectado
+    const paisesCount = {};
+    data.forEach(c => {
+      const lugar = (c.localizacion || "").trim();
+      if (lugar && lugar.toLowerCase() !== "no especificada") {
+        const pais = detectarPais(lugar);
+        paisesCount[pais] = (paisesCount[pais] || 0) + 1;
+      }
+    });
+
+    // Ordenar por número de casos
+    const paisesOrdenados = Object.entries(paisesCount)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 12);
+
+    if (paisesOrdenados.length > 0) {
+      paisesContainer.innerHTML = paisesOrdenados.map(([pais, count]) => {
+        const bandera = getBandera(pais);
+        const nombrePais = pais.charAt(0).toUpperCase() + pais.slice(1);
+        
+        return `
+          <div class="pais-card">
+            <span class="bandera">${bandera}</span>
+            <div class="pais-nombre">${nombrePais}</div>
+            <div class="pais-casos">${count} caso${count !== 1 ? 's' : ''}</div>
+          </div>
+        `;
+      }).join('');
+    }
+  }
+
+  // Gráfico de terapias (nuevo)
+  const terapiasCommon = {
+    'Lenguaje': /lenguaje|logopedia|fonoaudiología/i,
+    'Fisioterapia': /fisioterapia|terapia física/i,
+    'Ocupacional': /ocupacional|integracion sensorial/i,
+    'Conductual': /conductual|aba|análisis aplicado/i,
+    'Psicología': /psicología|psicoterapia/i,
+    'Educativa': /educativa|pedagógica|apoyo escolar/i
+  };
+
+  const countsTerapias = Object.entries(terapiasCommon).map(([name, regex]) => 
+    data.filter(r => regex.test(r.terapias || '')).length
+  );
+
+  const chartTerapias = document.getElementById('chartTerapias');
+  if (chartTerapias) {
+    new Chart(chartTerapias.getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: Object.keys(terapiasCommon),
+        datasets: [{
+          label: 'Pacientes',
+          data: countsTerapias,
+          backgroundColor: 'rgba(99, 230, 190, 0.6)'
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Número de casos'
+            }
+          }
+        }
+      }
+    });
+  }
+
+  // Gráfico de gravedad (nuevo)
+  const nivelesGravedad = {
+    'Leve': /leve|ligero|minor/i,
+    'Moderado': /moderado|medio|moderate/i,
+    'Severo': /severo|grave|sever|strong/i
+  };
+
+  const countsGravedad = Object.entries(nivelesGravedad).map(([name, regex]) =>
+    data.filter(r => regex.test(r.gravedad || '')).length
+  );
+
+  const chartGravedad = document.getElementById('chartGravedad');
+  if (chartGravedad) {
+    new Chart(chartGravedad.getContext('2d'), {
+      type: 'doughnut',
+      data: {
+        labels: Object.keys(nivelesGravedad),
+        datasets: [{
+          data: countsGravedad,
+          backgroundColor: [
+            'rgba(99, 230, 190, 0.6)', // Leve - verde
+            'rgba(255, 212, 59, 0.6)', // Moderado - amarillo
+            'rgba(255, 107, 107, 0.6)'  // Severo - rojo
+          ]
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'bottom'
+          }
+        }
+      }
+    });
+  }
+
   // Animaciones
   if (window.anime) {
     anime({
-      targets: '.panel',
+      targets: '.panel, .pais-card',
       opacity: [0, 1],
       translateY: [20, 0],
       delay: anime.stagger(100),
@@ -133,6 +260,41 @@ async function initStats() {
       easing: 'easeOutQuad'
     });
   }
+}
+
+// Funciones auxiliares (las mismas que en index.js)
+function getBandera(pais) {
+  const paisLimpio = pais.toLowerCase().replace(/[^a-záéíóúüñ\s]/g, '').trim();
+  
+  const banderas = {
+    'españa': '🇪🇸', 'espana': '🇪🇸', 'spain': '🇪🇸', 'andalucía': '🇪🇸', 'andalucia': '🇪🇸', 'malaga': '🇪🇸',
+    'argentina': '🇦🇷', 'honduras': '🇭🇳', 'méxico': '🇲🇽', 'mexico': '🇲🇽', 'colombia': '🇨🇴', 'chile': '🇨🇱',
+    'default': '🌍'
+  };
+
+  for (const [key, bandera] of Object.entries(banderas)) {
+    if (paisLimpio.includes(key) || key.includes(paisLimpio)) return bandera;
+  }
+  
+  return banderas.default;
+}
+
+function detectarPais(lugar) {
+  if (!lugar) return 'Desconocido';
+  const lugarLower = lugar.toLowerCase();
+  
+  const paises = {
+    'españa': ['malaga', 'málaga', 'madrid', 'barcelona'],
+    'argentina': ['buenos aires', 'córdoba'],
+    'honduras': ['tegucigalpa', 'san pedro sula'],
+    'default': lugar
+  };
+  
+  for (const [pais, ciudades] of Object.entries(paises)) {
+    if (ciudades.some(ciudad => lugarLower.includes(ciudad))) return pais;
+  }
+  
+  return paises.default;
 }
 
 document.addEventListener('DOMContentLoaded', initStats);
