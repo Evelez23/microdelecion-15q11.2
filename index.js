@@ -180,7 +180,7 @@ function detectarPais(lugar) {
   const lugarLower = lugar.toLowerCase();
   
   const paises = {
-    'españa': ['malaga', 'málaga', 'madrid', 'barcelona', 'valencia', 'sevilla', 'bilbao', 'granada'],
+    'españa': ['malaga', 'málaga', 'madrid', 'barcelona', 'valencia', 'sevilla', 'bilbao', 'granada', 'Alicante', 'Murcia', 'Zaragoza', 'Segovia',],
     'argentina': ['buenos aires', 'córdoba', 'rosario', 'mendoza', 'caba'],
     'honduras': ['tegucigalpa', 'san pedro sula', 'la ceiba'],
     'méxico': ['ciudad de méxico', 'cdmx', 'guadalajara', 'monterrey', 'cancún'],
