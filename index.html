@@ -1,0 +1,82 @@
+<!-- index.html -->
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Microdeleción 15q11.2 – Portal Comunitario</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <script defer src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script defer src="scripts.js"></script>
+  <script defer src="index.js"></script>
+</head>
+<body>
+  <nav class="nav">
+    <div class="inner">
+      <div class="brand">
+        <img class="logo" src="https://raw.githubusercontent.com/Evelez23/-microdelecion/refs/heads/main/img/logo%20micro1.png" alt="Logo Microdeleción 15q11.2">
+        <div>Microdeleción 15q11.2</div>
+      </div>
+      <div class="nav-links">
+        <a href="index.html">Inicio</a>
+        <a href="resumen.html">Resumen</a>
+        <a href="casos.html">Casos</a>
+        <a href="genetica.html">Genética</a>
+        <a href="estadisticas.html">Estadísticas</a>
+        <a class="btn-agregar" href="formulario.html">Reportar caso</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="container hero-flex">
+      <div class="hero-content">
+        <h1>Microdeleción 15q11.2 – Comunidad de Familias</h1>
+        <p>Plataforma colaborativa para documentar y comprender la microdeleción 15q11.2 <strong>desde la perspectiva de las familias afectadas</strong>.</p>
+        
+        <div class="testimonio">
+          <h2>“No estamos solos”</h2>
+          <p>Aunque cada niño es un mundo y la enfermedad nos sorprende con nuevas curvas, aquí compartimos el miedo, la rabia y también la alegría de cada pequeño paso:</p>
+          <ul>
+            <li>La primera palabra</li>
+            <li>El primer bocado</li>
+            <li>El día sin crisis</li>
+          </ul>
+          <p>Lloramos juntos, reímos juntos y, sobre todo, luchamos juntos. Porque somos muchos bajo el mismo gen y, entre todos, <strong>ya sabemos más que los libros</strong>.</p>
+        </div>
+        
+        <div class="cta">
+          <a class="button" href="casos.html">Ver casos</a>
+          <a class="button secondary" href="resumen.html">Ver resumen</a>
+        </div>
+      </div>
+      
+      <div class="hero-image">
+        <img src="https://raw.githubusercontent.com/Evelez23/-microdelecion/refs/heads/main/img/7572d736-f7ab-41b2-84a4-1b5a419f2c94.jpg" alt="Familias Microdeleción 15q11.2">
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="cards" id="kpis"></div>
+
+      <div class="grid-2">
+        <div class="panel">
+          <h3>Distribución por edades</h3>
+          <canvas id="chartAges" height="140"></canvas>
+        </div>
+        <div class="panel">
+          <h3>Estado de los casos</h3>
+          <canvas id="chartOrigen" height="140"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="disclaimer">
+    <p>💡 <strong>Importante:</strong> Esta plataforma es desarrollada por familias afectadas. La información aquí compartida tiene fines educativos y de apoyo mutuo, no sustituye el consejo médico profesional.</p>
+  </div>
+
+  <footer class="footer">© 2025 | Comunidad de Familias 15q11.2</footer>
+</body>
+</html>
