@@ -544,6 +544,63 @@ blockquote {
   .controls select {
     min-width: auto;
   }
+  /* Estilos para formulario.html */
+.form-container {
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  margin: 20px 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: var(--shadow);
+}
+
+.form-container iframe {
+  display: block;
+  border: none;
+}
+
+.contact-info {
+  background: rgba(110, 168, 254, 0.1);
+  padding: 20px;
+  border-radius: var(--border-radius);
+  margin-top: 15px;
+}
+
+.contact-info p {
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+}
+
+.contact-info p:before {
+  margin-right: 10px;
+  font-size: 1.2em;
+}
+
+.disclaimer {
+  background: rgba(255, 212, 59, 0.1);
+  border-left: 4px solid var(--warn);
+}
+
+.note {
+  font-style: italic;
+  font-size: 0.9em;
+  margin-top: 15px;
+  color: var(--muted);
+}
+
+/* Mejoras responsive para el formulario */
+@media (max-width: 768px) {
+  .form-container {
+    margin: 15px -10px;
+    border-radius: 0;
+  }
+  
+  .contact-info p {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+}
 }
 
 
