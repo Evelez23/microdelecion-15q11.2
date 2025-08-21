@@ -362,3 +362,67 @@ function detectarPais(lugar) {
   
   return lugar;
 }
+// estadisticas.js - Agregar estas funciones al FINAL del archivo
+
+// Función para obtener bandera por país
+function getBandera(pais) {
+  if (!pais) return '🌍';
+  
+  const paisLimpio = pais.toLowerCase()
+    .replace(/[^a-záéíóúüñ\s]/g, '')
+    .trim();
+  
+  const banderas = {
+    // España y variantes
+    'españa': '🇪🇸', 'espana': '🇪🇸', 'spain': '🇪🇸',
+    'andalucía': '🇪🇸', 'andalucia': '🇪🇸', 'malaga': '🇪🇸',
+    'madrid': '🇪🇸', 'barcelona': '🇪🇸', 'valencia': '🇪🇸',
+    'sevilla': '🇪🇸', 'bilbao': '🇪🇸', 'granada': '🇪🇸',
+    
+    // Latinoamérica
+    'argentina': '🇦🇷', 'buenos aires': '🇦🇷', 'córdoba': '🇦🇷',
+    'honduras': '🇭🇳', 'tegucigalpa': '🇭🇳',
+    'méxico': '🇲🇽', 'mexico': '🇲🇽', 'cdmx': '🇲🇽',
+    'colombia': '🇨🇴', 'bogota': '🇨🇴', 'medellin': '🇨🇴',
+    'chile': '🇨🇱', 'santiago': '🇨🇱',
+    'perú': '🇵🇪', 'peru': '🇵🇪', 'lima': '🇵🇪',
+    'venezuela': '🇻🇪', 'caracas': '🇻🇪',
+    
+    'default': '🌍'
+  };
+
+  // Buscar coincidencias
+  for (const [key, bandera] of Object.entries(banderas)) {
+    if (paisLimpio.includes(key)) {
+      return bandera;
+    }
+  }
+  
+  return banderas.default;
+}
+
+// Función para detectar el país desde una ciudad/región
+function detectarPais(lugar) {
+  if (!lugar) return 'Desconocido';
+  
+  const lugarLower = lugar.toLowerCase();
+  
+  const paises = {
+    'españa': ['malaga', 'málaga', 'madrid', 'barcelona', 'valencia', 'sevilla'],
+    'argentina': ['buenos aires', 'córdoba', 'rosario', 'mendoza'],
+    'honduras': ['tegucigalpa', 'san pedro sula', 'la ceiba'],
+    'méxico': ['ciudad de méxico', 'cdmx', 'guadalajara', 'monterrey'],
+    'colombia': ['bogotá', 'bogota', 'medellín', 'medellin', 'cali'],
+    'chile': ['santiago', 'valparaíso'],
+    'default': lugar
+  };
+  
+  // Buscar si el lugar contiene una ciudad de algún país
+  for (const [pais, ciudades] of Object.entries(paises)) {
+    if (ciudades.some(ciudad => lugarLower.includes(ciudad))) {
+      return pais;
+    }
+  }
+  
+  return lugar;
+}
