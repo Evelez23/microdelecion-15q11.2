@@ -1,0 +1,56 @@
+<!-- resumen.html -->
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Resumen | Microdeleción 15q11.2</title>
+  <meta name="description" content="Resumen estadístico de los casos de microdeleción 15q11.2">
+  <link rel="stylesheet" href="styles.css"/>
+  <script defer src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script defer src="scripts.js"></script>
+  <script defer src="resumen.js"></script>
+</head>
+<body>
+  <nav class="nav">
+    <div class="inner">
+      <div class="brand">
+        <img class="logo" src="https://raw.githubusercontent.com/Evelez23/-microdelecion/refs/heads/main/img/logo%20micro1.png" alt="Logo Microdeleción 15q11.2">
+        <div>Microdeleción 15q11.2</div>
+      </div>
+      <div class="nav-links">
+        <a href="index.html">Inicio</a>
+        <a href="resumen.html">Resumen</a>
+        <a href="casos.html">Casos</a>
+        <a href="genetica.html">Genética</a>
+        <a href="estadisticas.html">Estadísticas</a>
+        <a class="btn-agregar" href="formulario.html">Reportar caso</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="container">
+    <h1>Resumen clínico</h1>
+    <p class="subtitle">Datos actualizados en tiempo real desde nuestra base de datos comunitaria</p>
+
+    <div class="grid-2">
+      <div class="panel">
+        <h2>Distribución por grupos de edad</h2>
+        <canvas id="chartAgePie" height="160" aria-label="Distribución de casos por grupos de edad"></canvas>
+      </div>
+      <div class="panel">
+        <h2>Hallazgos principales</h2>
+        <canvas id="chartSymptoms" height="160" aria-label="Frecuencia de síntomas principales"></canvas>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Origen de los casos</h2>
+      <canvas id="chartOrigenResumen" height="160" aria-label="Distribución de casos por origen"></canvas>
+    </div>
+  </section>
+
+  <footer class="footer">© 2025 | Datos sincronizados desde nuestra base comunitaria</footer>
+</body>
+</html>
