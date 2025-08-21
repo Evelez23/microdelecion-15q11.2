@@ -1,22 +1,15 @@
-  <div class="code-container">
-                <div class="code-header">
-                    <h3>casos.html</h3>
-                    <div class="code-tabs">
-                        <div class="code-tab active" onclick="showCode('casos-html')">HTML</div>
-                    </div>
-                </div>
-                <div id="casos-html" class="code-content active">
 &lt;!doctype html&gt;
 &lt;html lang="es"&gt;
 &lt;head&gt;
   &lt;meta charset="utf-8"/&gt;
   &lt;meta name="viewport" content="width=device-width, initial-scale=1"/&gt;
-  &lt;title&gt;Casos Registrados | Microdeleción 15q11.2&lt;/title&gt;
-  &lt;meta name="description" content="Base de datos de casos de microdeleción 15q11.2 reportados por familias"&gt;
+  &lt;title&gt;Genética | Microdeleción 15q11.2&lt;/title&gt;
+  &lt;meta name="description" content="Información genética sobre la microdeleción 15q11.2"&gt;
   &lt;link rel="stylesheet" href="styles.css"/&gt;
   &lt;script defer src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"&gt;&lt;/script&gt;
+  &lt;script defer src="https://cdn.jsdelivr.net/npm/chart.js"&gt;&lt;/script&gt;
   &lt;script defer src="scripts.js"&gt;&lt;/script&gt;
-  &lt;script defer src="casos.js"&gt;&lt;/script&gt;
+  &lt;script defer src="genetica.js"&gt;&lt;/script&gt;
 &lt;/head&gt;
 &lt;body&gt;
   &lt;nav class="nav"&gt;
@@ -37,40 +30,133 @@
   &lt;/nav&gt;
 
   &lt;section class="container"&gt;
-    &lt;h1&gt;Casos Registrados&lt;/h1&gt;
-    &lt;p class="subtitle"&gt;Base de datos comunitaria de personas con microdeleción 15q11.2 reportados por familias&lt;/p&gt;
+    &lt;h1&gt;Microdeleción 15q11.2&lt;/h1&gt;
+    &lt;p class="subtitle"&gt;
+      Información clave para comprender esta condición genética poco frecuente, organizada de manera clara para familias y profesionales.
+    &lt;/p&gt;
 
-    &lt;div class="controls"&gt;
-      &lt;input type="text" id="search" placeholder="Buscar casos por nombre, ubicación o síntomas..." aria-label="Buscar casos"&gt;
-      
-      &lt;select id="filtro-genero"&gt;
-        &lt;option value=""&gt;Todos los géneros&lt;/option&gt;
-        &lt;option value="m"&gt;Masculino&lt;/option&gt;
-        &lt;option value="f"&gt;Femenino&lt;/option&gt;
-      &lt;/select&gt;
-
-      &lt;select id="filtro-gravedad"&gt;
-        &lt;option value=""&gt;Todos los niveles&lt;/option&gt;
-        &lt;option value="leve"&gt;Leve&lt;/option&gt;
-        &lt;option value="moderado"&gt;Moderado&lt;/option&gt;
-        &lt;option value="severo"&gt;Severo&lt;/option&gt;
-      &lt;/select&gt;
+    &lt;!-- Hero con imagen --&gt;
+    &lt;div class="hero-genetica"&gt;
+      &lt;img src="https://raw.githubusercontent.com/Evelez23/-microdelecion/refs/heads/main/img/7572d736-f7ab-41b2-84a4-1b5a419f2c94.jpg" 
+           alt="Familias y microdeleción" class="hero-image"&gt;
     &lt;/div&gt;
 
-    &lt;!-- Casos Validados --&gt;
-    &lt;h2&gt;Casos Validados&lt;/h2&gt;
-    &lt;div id="casos-validados" class="listado-casos"&gt;&lt;/div&gt;
+    &lt;!-- Qué es --&gt;
+    &lt;div class="panel"&gt;
+      &lt;h2&gt;¿Qué es?&lt;/h2&gt;
+      &lt;p&gt;
+        La &lt;strong&gt;microdeleción 15q11.2&lt;/strong&gt; es una condición genética rara causada por la 
+        &lt;strong&gt;pérdida de una pequeña porción del cromosoma 15&lt;/strong&gt;, en la región conocida como 
+        &lt;em&gt;Burnside-Butler&lt;/em&gt;. Afecta los genes &lt;strong&gt;TUBGCP5, CYFIP1, NIPA2 y NIPA1&lt;/strong&gt;.
+      &lt;/p&gt;
+    &lt;/div&gt;
 
-    &lt;!-- Casos No Validados --&gt;
-    &lt;h2&gt;Casos No Validados&lt;/h2&gt;
-    &lt;div id="casos-no-validados" class="listado-casos"&gt;&lt;/div&gt;
+    &lt;!-- Síntomas --&gt;
+    &lt;div class="grid-2"&gt;
+      &lt;div class="panel"&gt;
+        &lt;h2&gt;Síntomas frecuentes&lt;/h2&gt;
+        &lt;ul&gt;
+          &lt;li&gt;Retraso en el desarrollo motor y/o del lenguaje.&lt;/li&gt;
+          &lt;li&gt;Dificultades de aprendizaje (leves a moderadas).&lt;/li&gt;
+          &lt;li&gt;Trastornos de la comunicación, TEA, TDAH, ansiedad.&lt;/li&gt;
+          &lt;li&gt;Convulsiones o actividad epileptiforme.&lt;/li&gt;
+          &lt;li&gt;Hipotonía en la infancia.&lt;/li&gt;
+          &lt;li&gt;Problemas gastrointestinales y de sueño.&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/div&gt;
+      &lt;div class="panel image-panel"&gt;
+        &lt;img src="https://raw.githubusercontent.com/Evelez23/-microdelecion/refs/heads/main/img/i%CC%81cono%20DNA.png" 
+             alt="Icono ADN" class="icono-dna"&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Frecuencia y herencia --&gt;
+    &lt;div class="grid-2"&gt;
+      &lt;div class="panel"&gt;
+        &lt;h2&gt;¿Qué tan común es?&lt;/h2&gt;
+        &lt;p&gt;
+          Se estima en alrededor del &lt;strong&gt;0.25–0.30% de las personas evaluadas genéticamente&lt;/strong&gt;. 
+          Es una de las microdeleciones más frecuentes detectadas en microarrays clínicos.  
+          &lt;em&gt;Expresividad variable:&lt;/em&gt; no todos los portadores presentan síntomas graves.
+        &lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="panel"&gt;
+        &lt;h2&gt;¿Se hereda?&lt;/h2&gt;
+        &lt;p&gt;
+          Puede heredarse de un progenitor (con o sin síntomas).  
+          Si es &lt;em&gt;de novo&lt;/em&gt; (nueva en el niño), la probabilidad de repetición es baja.
+        &lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Detección --&gt;
+    &lt;div class="panel"&gt;
+      &lt;h2&gt;¿Cómo se detecta?&lt;/h2&gt;
+      &lt;p&gt;
+        Mediante estudios como &lt;strong&gt;Microarray CGH o SNP microarrays&lt;/strong&gt;, que son más precisos que el cariotipo convencional.  
+        &lt;br&gt;Ejemplo de resultado: &lt;code&gt;arr[hg19]15q11.2(22728371-23260335)x1dn&lt;/code&gt;.
+      &lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Genes involucrados --&gt;
+    &lt;div class="grid-2"&gt;
+      &lt;div class="panel"&gt;
+        &lt;h2&gt;Genes involucrados&lt;/h2&gt;
+        &lt;ul&gt;
+          &lt;li&gt;&lt;strong&gt;NIPA1 / NIPA2&lt;/strong&gt;: transporte de magnesio, epilepsia y rigidez muscular.&lt;/li&gt;
+          &lt;li&gt;&lt;strong&gt;CYFIP1&lt;/strong&gt;: vinculado con autismo y dificultades cognitivas.&lt;/li&gt;
+          &lt;li&gt;&lt;strong&gt;TUBGCP5&lt;/strong&gt;: asociado a TDAH, TOC y ansiedad.&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/div&gt;
+      &lt;div class="panel image-panel"&gt;
+        &lt;img src="https://raw.githubusercontent.com/Evelez23/-microdelecion/refs/heads/main/img/ChatGPT%20Image%2013%20ago%202025%2C%2010_39_09.png" 
+             alt="Ilustración genes" class="image-side"&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Gráficos --&gt;
+    &lt;div class="grid-2"&gt;
+      &lt;div class="panel"&gt;
+        &lt;h2&gt;Genes implicados&lt;/h2&gt;
+        &lt;div class="gene-info"&gt;
+          &lt;p&gt;Esta región crítica contiene cuatro genes principales:&lt;/p&gt;
+          &lt;ul&gt;
+            &lt;li&gt;&lt;strong&gt;CYFIP1&lt;/strong&gt;: Regula la síntesis de proteínas en sinapsis neuronales&lt;/li&gt;
+            &lt;li&gt;&lt;strong&gt;NIPA1/2&lt;/strong&gt;: Transportadores de magnesio esenciales&lt;/li&gt;
+            &lt;li&gt;&lt;strong&gt;TUBGCP5&lt;/strong&gt;: Participa en la organización microtubular&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/div&gt;
+        &lt;canvas id="chartGenes" height="160" aria-label="Frecuencia de afectación de genes"&gt;&lt;/canvas&gt;
+      &lt;/div&gt;
+      
+      &lt;div class="panel"&gt;
+        &lt;h2&gt;Patrón de herencia&lt;/h2&gt;
+        &lt;div class="inheritance-info"&gt;
+          &lt;p&gt;Características genéticas principales:&lt;/p&gt;
+          &lt;ul&gt;
+            &lt;li&gt;Herencia &lt;strong&gt;autosómica dominante&lt;/strong&gt; con penetrancia variable&lt;/li&gt;
+            &lt;li&gt;~65% de casos son &lt;em&gt;de novo&lt;/em&gt; (no heredados)&lt;/li&gt;
+            &lt;li&gt;Riesgo de recurrencia del 50% en descendencia&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/div&gt;
+        &lt;canvas id="chartHerencia" height="160" aria-label="Distribución de patrones de herencia"&gt;&lt;/canvas&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Apoyo --&gt;
+    &lt;div class="panel"&gt;
+      &lt;h2&gt;Apoyo y recomendaciones&lt;/h2&gt;
+      &lt;p&gt;
+        La intervención temprana con &lt;strong&gt;terapias de lenguaje, fisioterapia y apoyo conductual&lt;/strong&gt; 
+        puede marcar la diferencia.  
+        &lt;br&gt;Existen comunidades de familias, como &lt;em&gt;Unique&lt;/em&gt;, donde compartir experiencias y apoyarse mutuamente.
+      &lt;/p&gt;
+      &lt;blockquote&gt;
+        "La microdeleción 15q11.2 no define a tu hijo. Con apoyos adecuados, cada persona puede desarrollarse a su manera y alcanzar su máximo potencial."
+      &lt;/blockquote&gt;
+    &lt;/div&gt;
   &lt;/section&gt;
 
-  &lt;div class="disclaimer"&gt;
-    &lt;p&gt;🔒 &lt;strong&gt;Privacidad:&lt;/strong&gt; La información mostrada es de carácter general. Para proteger la privacidad, hemos omitido datos sensibles.&lt;/p&gt;
-  &lt;/div&gt;
-
-  &lt;footer class="footer"&gt;© 2025 | Comunidad de Familias 15q11.2&lt;/footer&gt;
+  &lt;footer class="footer"&gt;© 2025 | Información genética actualizada a 2025&lt;/footer&gt;
 &lt;/body&gt;
 &lt;/html&gt;
-                </div>
