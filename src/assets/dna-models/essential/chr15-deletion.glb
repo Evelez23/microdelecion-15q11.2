@@ -1,4 +1,0 @@
-<comparison-slider>
-  <div slot="wild">models/chr15-wild.glb</div>
-  <div slot="mutant">models/chr15-deletion.glb</div>
-</comparison-slider>
