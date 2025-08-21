@@ -1,191 +1,31 @@
-// index.js - Versión mejorada con países
+// index.js - Estructura completa
 async function initIndex() {
   const data = await loadDataset();
 
-  // ---- KPIs ----
-  const total = data.length;
-  const validados = data.filter(c => c.__origen === "validado").length;
-  const noValidados = data.filter(c => c.__origen === "no_validado").length;
+  // ---- 1. KPIs ----
+  // ... código de KPIs
 
-  // Países / localización distintos (excluyendo "No especificada")
-  const paisesSet = new Set(
-    data
-      .map(c => (c.localizacion || "").trim())
-      .filter(p => p && p.toLowerCase() !== "no especificada")
-  );
+  // ---- 2. Gráfico de edades ----
+  // ... código del gráfico
 
-  // Render de KPIs
-  const kpiContainer = document.getElementById("kpis");
-  if (kpiContainer) {
-    kpiContainer.innerHTML = `
-      <div class="panel kpi">
-        <h2>${total}</h2>
-        <p>Total de casos</p>
-      </div>
-      <div class="panel kpi">
-        <h2>${validados}</h2>
-        <p>Casos validados</p>
-      </div>
-      <div class="panel kpi">
-        <h2>${noValidados}</h2>
-        <p>Casos no validados</p>
-      </div>
-      <div class="panel kpi">
-        <h2>${paisesSet.size}</h2>
-        <p>Países con casos</p>
-      </div>
-    `;
-  }
+  // ---- 3. Mapa de países ---- ← NUEVA SECCIÓN
+  // ... el código nuevo aquí
 
-  // ---- Distribución por edades ----
-  const buckets = {
-    "0-5": 0,
-    "6-12": 0,
-    "13-18": 0,
-    "19+": 0,
-    "No especificada": 0
-  };
-
-  data.forEach(c => {
-    const edad = parseInt(c.edad);
-    if (!isNaN(edad)) {
-      if (edad <= 5) buckets["0-5"]++;
-      else if (edad <= 12) buckets["6-12"]++;
-      else if (edad <= 18) buckets["13-18"]++;
-      else buckets["19+"]++;
-    } else {
-      buckets["No especificada"]++;
-    }
-  });
-
-  // Chart: edades
-  const agesEl = document.getElementById("chartAges");
-  if (agesEl) {
-    const ctxAges = agesEl.getContext("2d");
-    new Chart(ctxAges, {
-      type: "bar",
-      data: {
-        labels: Object.keys(buckets),
-        datasets: [{
-          label: "Número de casos",
-          data: Object.values(buckets),
-          backgroundColor: "#4e79a7"
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: { legend: { display: false } },
-        scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
-      }
-    });
-  }
-
-  // ---- Mapa de países ----
-  const paisesContainer = document.getElementById("paises-container");
-  if (paisesContainer) {
-    // Contar casos por país
-    const paisesCount = {};
-    data.forEach(c => {
-      const pais = (c.localizacion || "").trim();
-      if (pais && pais.toLowerCase() !== "no especificada") {
-        paisesCount[pais] = (paisesCount[pais] || 0) + 1;
-      }
-    });
-
-    // Ordenar por número de casos
-    const paisesOrdenados = Object.entries(paisesCount)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 12); // Top 12 países
-
-    if (paisesOrdenados.length > 0) {
-      paisesContainer.innerHTML = paisesOrdenados.map(([pais, count]) => `
-        <div class="pais-card">
-          <span class="bandera">${getBandera(pais)}</span>
-          <div class="pais-nombre">${acortarNombre(pais)}</div>
-          <div class="pais-casos">${count} caso${count !== 1 ? 's' : ''}</div>
-        </div>
-      `).join('');
-    } else {
-      paisesContainer.innerHTML = '<div class="pais-loading">No hay datos de países disponibles</div>';
-    }
-  }
-
-  // Animaciones
-  if (window.anime) {
-    anime({
-      targets: '.panel, .pais-card',
-      opacity: [0, 1],
-      translateY: [20, 0],
-      delay: anime.stagger(100),
-      duration: 800,
-      easing: 'easeOutQuad'
-    });
-  }
+  // ---- 4. Animaciones ----
+  // ... código de animaciones
 }
 
-// En index.js - función getBandera mejorada
+// ---- FUNCIONES AUXILIARES FUERA de initIndex() ---- 
 function getBandera(pais) {
-  // Limpiar y normalizar el texto del país
-  const paisLimpio = pais.toLowerCase()
-    .replace(/[^a-záéíóúüñ\s]/g, '') // Eliminar caracteres especiales
-    .trim();
-  
-  const banderas = {
-    // España y variantes
-    'españa': '🇪🇸', 'espana': '🇪🇸', 'spain': '🇪🇸',
-    'andalucía': '🇪🇸', 'andalucia': '🇪🇸', 'malaga': '🇪🇸',
-    'madrid': '🇪🇸', 'barcelona': '🇪🇸', 'valencia': '🇪🇸',
-    
-    // Latinoamérica
-    'argentina': '🇦🇷', 
-    'honduras': '🇭🇳',
-    'méxico': '🇲🇽', 'mexico': '🇲🇽',
-    'colombia': '🇨🇴',
-    'chile': '🇨🇱',
-    'perú': '🇵🇪', 'peru': '🇵🇪',
-    'venezuela': '🇻🇪',
-    'ecuador': '🇪🇨',
-    'uruguay': '🇺🇾',
-    'paraguay': '🇵🇾',
-    'bolivia': '🇧🇴',
-    'costarica': '🇨🇷', 'costa rica': '🇨🇷',
-    
-    // Norteamérica
-    'estados unidos': '🇺🇸', 'usa': '🇺🇸', 'eeuu': '🇺🇸',
-    'canadá': '🇨🇦', 'canada': '🇨🇦',
-    
-    // Europa
-    'francia': '🇫🇷',
-    'alemania': '🇩🇪',
-    'italia': '🇮🇹',
-    'portugal': '🇵🇹',
-    'reino unido': '🇬🇧', 'uk': '🇬🇧',
-    
-    'default': '🌍'
-  };
-
-  // Buscar coincidencias parciales
-  for (const [key, bandera] of Object.entries(banderas)) {
-    if (paisLimpio.includes(key) || key.includes(paisLimpio)) {
-      return bandera;
-    }
-  }
-  
-  return banderas.default;
-}
+  // ... código de la función
 }
 
-// Acortar nombres largos de países
+function detectarPais(lugar) {
+  // ... código de la función
+}
+
 function acortarNombre(pais) {
-  const acortamientos = {
-    'estados unidos': 'EE.UU.',
-    'reino unido': 'R.U.',
-    'república dominicana': 'R.D.',
-    'default': pais.length > 12 ? pais.substring(0, 10) + '...' : pais
-  };
-
-  const paisLower = pais.toLowerCase();
-  return acortamientos[paisLower] || acortamientos.default;
+  // ... código de la función
 }
 
 document.addEventListener("DOMContentLoaded", initIndex);
