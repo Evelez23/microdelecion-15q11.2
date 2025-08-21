@@ -1,10 +1,10 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Microdeleción 15q11.2 – Portal Comunitario</title>
-  <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="styles.css">
   <script defer src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script defer src="scripts.js"></script>
@@ -50,22 +50,12 @@
           <a class="button secondary" href="resumen.html">Ver resumen</a>
         </div>
       </div>
-    
-<div class="hero">
-  <div class="container hero-flex">
-    <div class="hero-content">
-      <h1>Microdeleción 15q11.2 – Comunidad de Familias</h1>
-      <p>Plataforma colaborativa para documentar y comprender la microdeleción 15q11.2 
-      <strong>desde la perspectiva de las familias afectadas</strong>.</p>
-    </div>
-    <div class="hero-image">
-      <img src="https://raw.githubusercontent.com/Evelez23/-microdelecion/refs/heads/main/img/82526dd8-8147-48ea-88dc-700b6a49ebf8.png" 
-           alt="Mi hijo empujando su caminadora - cada pequeño paso es una victoria" 
-           class="pintura-oleo">
-      <p class="pie-foto">Cada pequeño paso es una victoria - Familia 15q11.2</p>
-    </div>
-  </div>
-</div>
+      
+      <div class="hero-image">
+        <img src="https://raw.githubusercontent.com/Evelez23/-microdelecion/refs/heads/main/img/82526dd8-8147-48ea-88dc-700b6a49ebf8.png" 
+             alt="Mi hijo empujando su caminadora - cada pequeño paso es una victoria" 
+             class="pintura-oleo">
+        <p class="pie-foto">Cada pequeño paso es una victoria - Familia 15q11.2</p>
       </div>
     </div>
 
@@ -78,8 +68,10 @@
           <canvas id="chartAges" height="140"></canvas>
         </div>
         <div class="panel">
-          <h3>Estado de los casos</h3>
-          <canvas id="chartOrigen" height="140"></canvas>
+          <h3>Presencia internacional</h3>
+          <div id="paises-container" class="paises-grid">
+            <div class="pais-loading">Cargando países...</div>
+          </div>
         </div>
       </div>
     </div>
