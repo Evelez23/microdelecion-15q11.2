@@ -123,28 +123,56 @@ async function initIndex() {
   }
 }
 
-// Función para obtener bandera por país
+// En index.js - función getBandera mejorada
 function getBandera(pais) {
+  // Limpiar y normalizar el texto del país
+  const paisLimpio = pais.toLowerCase()
+    .replace(/[^a-záéíóúüñ\s]/g, '') // Eliminar caracteres especiales
+    .trim();
+  
   const banderas = {
-    'españa': '🇪🇸', 'spain': '🇪🇸', 'espana': '🇪🇸',
-    'méxico': '🇲🇽', 'mexico': '🇲🇽', 
+    // España y variantes
+    'españa': '🇪🇸', 'espana': '🇪🇸', 'spain': '🇪🇸',
+    'andalucía': '🇪🇸', 'andalucia': '🇪🇸', 'malaga': '🇪🇸',
+    'madrid': '🇪🇸', 'barcelona': '🇪🇸', 'valencia': '🇪🇸',
+    
+    // Latinoamérica
+    'argentina': '🇦🇷', 
+    'honduras': '🇭🇳',
+    'méxico': '🇲🇽', 'mexico': '🇲🇽',
     'colombia': '🇨🇴',
-    'argentina': '🇦🇷',
     'chile': '🇨🇱',
     'perú': '🇵🇪', 'peru': '🇵🇪',
     'venezuela': '🇻🇪',
-    'estados unidos': '🇺🇸', 'usa': '🇺🇸',
+    'ecuador': '🇪🇨',
+    'uruguay': '🇺🇾',
+    'paraguay': '🇵🇾',
+    'bolivia': '🇧🇴',
+    'costarica': '🇨🇷', 'costa rica': '🇨🇷',
+    
+    // Norteamérica
+    'estados unidos': '🇺🇸', 'usa': '🇺🇸', 'eeuu': '🇺🇸',
     'canadá': '🇨🇦', 'canada': '🇨🇦',
-    'brasil': '🇧🇷',
+    
+    // Europa
     'francia': '🇫🇷',
     'alemania': '🇩🇪',
     'italia': '🇮🇹',
+    'portugal': '🇵🇹',
     'reino unido': '🇬🇧', 'uk': '🇬🇧',
+    
     'default': '🌍'
   };
 
-  const paisLower = pais.toLowerCase();
-  return banderas[paisLower] || banderas[paisLower.replace(/\s+/g, '')] || banderas.default;
+  // Buscar coincidencias parciales
+  for (const [key, bandera] of Object.entries(banderas)) {
+    if (paisLimpio.includes(key) || key.includes(paisLimpio)) {
+      return bandera;
+    }
+  }
+  
+  return banderas.default;
+}
 }
 
 // Acortar nombres largos de países
