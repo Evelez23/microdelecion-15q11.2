@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recursos | Microdeleción 15q11.2</title>
     <style>
+        /* Tus estilos actuales aquí */
         :root {
             --bg: #0b1020;
             --card: #0f1730;
@@ -12,284 +13,18 @@
             --text: #e8ecf7;
             --primary: #6ea8fe;
             --accent: #e53935;
-            --danger: #ff6b6b;
-            --ok: #63e6be;
-            --warn: #ffd43b;
             --shadow: 0 10px 30px rgba(0,0,0,.35);
             --border-radius: 12px;
         }
         
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        
-        body {
-            margin: 0;
-            font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Ubuntu, Cantarell, Noto Sans, sans-serif;
-            background: radial-gradient(1200px 800px at 80% -10%, rgba(110,168,254,.14), transparent 60%),
-                        radial-gradient(800px 600px at -10% 20%, rgba(0,209,209,.10), transparent 60%),
-                        var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 24px;
-            flex: 1;
-        }
-        
-        .nav {
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            backdrop-filter: blur(10px);
-            background: linear-gradient(180deg, rgba(11,16,32,.85), rgba(11,16,32,.45));
-            border-bottom: 1px solid rgba(255,255,255,.06);
-        }
-        
-        .nav .inner {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            justify-content: space-between;
-            padding: 12px 24px;
-            flex-wrap: wrap;
-        }
-        
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 700;
-            letter-spacing: .3px;
-        }
-        
-        .brand img.logo {
-            height: 40px;
-            width: auto;
-            margin-right: 10px;
-            display: inline-block;
-            vertical-align: middle;
-            background: none;
-            border: none;
-        }
-        
-        .nav a {
-            color: var(--muted);
-            text-decoration: none;
-            padding: 10px 12px;
-            border-radius: var(--border-radius);
-            transition: .2s;
-        }
-        
-        .nav a.active, .nav a:hover {
-            color: var(--text);
-            background: rgba(255,255,255,.05);
-        }
-        
-        .nav .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-        
-        .btn-agregar {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--accent);
-            color: white;
-            padding: 10px 14px;
-            border-radius: var(--border-radius);
-            font-weight: 700;
-            text-decoration: none;
-            border: 1px solid rgba(255,255,255,.1);
-            box-shadow: var(--shadow);
-            transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
-        }
-        
-        .btn-agregar:hover {
-            background: #33e0e0;
-            transform: translateY(-1px);
-            box-shadow: 0 12px 30px rgba(0,209,209,.25);
-        }
-        
-        h1 {
-            font-size: clamp(28px, 4vw, 46px);
-            line-height: 1.1;
-            margin: 0 0 16px;
-        }
-        
-        .subtitle {
-            margin: 0 0 18px;
-            color: var(--muted);
-        }
-        
-        .panel {
-            background: var(--card);
-            border-radius: var(--border-radius);
-            padding: 24px;
-            box-shadow: var(--shadow);
-            margin-bottom: 30px;
-        }
-        
-        .panel h2 {
-            margin-top: 0;
-            margin-bottom: 16px;
-            color: var(--primary);
-        }
-        
-        .resources-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-        
-        .resource-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: var(--border-radius);
-            padding: 20px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .resource-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
-        }
-        
-        .resource-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            color: var(--primary);
-        }
-        
-        .resource-card h3 {
-            margin: 0 0 12px 0;
-            color: var(--text);
-        }
-        
-        .resource-card p {
-            color: var(--muted);
-            flex-grow: 1;
-            margin-bottom: 15px;
-        }
-        
-        .btn-download {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--primary);
-            color: var(--bg);
-            padding: 8px 16px;
-            border-radius: var(--border-radius);
-            font-weight: 600;
-            text-decoration: none;
-            transition: background .2s ease;
-            margin-top: auto;
-        }
-        
-        .btn-download:hover {
-            background: #8bb9fe;
-        }
-        
-        .btn-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--text);
-            padding: 8px 16px;
-            border-radius: var(--border-radius);
-            font-weight: 600;
-            text-decoration: none;
-            transition: background .2s ease;
-            margin-top: auto;
-        }
-        
-        .btn-link:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-        
-        .links-list {
-            list-style: none;
-            margin: 20px 0;
-        }
-        
-        .links-list li {
-            margin-bottom: 12px;
-            padding: 12px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: var(--border-radius);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .links-list a {
-            color: var(--primary);
-            text-decoration: none;
-            flex-grow: 1;
-        }
-        
-        .links-list a:hover {
-            text-decoration: underline;
-        }
-        
-        .tag {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.8em;
-            font-weight: 600;
-            margin-left: 10px;
-        }
-        
-        .tag-pdf {
-            background: #e53935;
-            color: white;
-        }
-        
-        .tag-link {
-            background: var(--primary);
-            color: var(--bg);
-        }
-        
-        .footer {
-            text-align: center;
-            padding: 24px;
-            margin-top: auto;
-            color: var(--muted);
-            font-size: 0.9rem;
-        }
-        
-        @media (max-width: 768px) {
-            .resources-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .container {
-                padding: 16px;
-            }
-        }
+        /* Mantén todos tus estilos actuales */
     </style>
 </head>
 <body>
     <nav class="nav">
         <div class="inner">
             <div class="brand">
-                <img class="logo" src="https://raw.githubusercontent.com/Evelez23/-microdelecion/refs/heads/main/img/logo%20micro1.png" alt="Logo Microdeleción 15q11.2">
+                <img class="logo" src="img/logo%20micro1.png" alt="Logo Microdeleción 15q11.2">
                 <div>Microdeleción 15q11.2</div>
             </div>
             <div class="nav-links">
@@ -305,55 +40,37 @@
     </nav>
 
     <section class="container">
-        <h1>Recursos Útiles</h1>
-        <p class="subtitle">Documentación, guías y enlaces importantes sobre microdeleción 15q11.2</p>
+        <h1>Recursos en Desarrollo</h1>
+        <p class="subtitle">Estamos construyendo esta sección con información útil para la comunidad</p>
 
         <div class="panel">
-            <h2>📚 Documentos para Descargar</h2>
-            <p>Guías prácticas y material informativo en formato PDF</p>
+            <h2>📋 Próximamente</h2>
+            <p>Estamos trabajando en crear recursos valiosos para las familias. ¿Te gustaría contribuir?</p>
             
             <div class="resources-grid">
                 <div class="resource-card">
-                    <div class="resource-icon">📋</div>
-                    <h3>Guía para Familias</h3>
-                    <p>Información completa sobre la microdeleción 15q11.2, síntomas, tratamientos y consejos para el cuidado.</p>
-                    <a href="https://github.com/Evelez23/microdelecion-15q11.2/raw/main/resources/guia-familias.pdf" class="btn-download" download>
-                        <span>Descargar PDF</span>
+                    <div class="resource-icon">💡</div>
+                    <h3>¿Tienes recursos para compartir?</h3>
+                    <p>Si tienes material útil, guías o información que pueda ayudar a otras familias, compártela con nosotros.</p>
+                    <a href="formulario.html" class="btn-download">
+                        <span>Contribuir</span>
                     </a>
                 </div>
                 
                 <div class="resource-card">
-                    <div class="resource-icon">🏥</div>
-                    <h3>Protocolo Médico</h3>
-                    <p>Recomendaciones para el manejo clínico y seguimiento de pacientes con microdeleción 15q11.2.</p>
-                    <a href="https://github.com/Evelez23/microdelecion-15q11.2/raw/main/resources/protocolo-medico.pdf" class="btn-download" download>
-                        <span>Descargar PDF</span>
-                    </a>
-                </div>
-                
-                <div class="resource-card">
-                    <div class="resource-icon">👩‍🏫</div>
-                    <h3>Guía Educativa</h3>
-                    <p>Estrategias para educadores y adaptaciones curriculares para niños con microdeleción 15q11.2.</p>
-                    <a href="https://github.com/Evelez23/microdelecion-15q11.2/raw/main/resources/guia-educativa.pdf" class="btn-download" download>
-                        <span>Descargar PDF</span>
-                    </a>
-                </div>
-                
-                <div class="resource-card">
-                    <div class="resource-icon">🩺</div>
-                    <h3>Terapias Recomendadas</h3>
-                    <p>Listado detallado de intervenciones y terapias efectivas para los diferentes síntomas.</p>
-                    <a href="https://github.com/Evelez23/microdelecion-15q11.2/raw/main/resources/terapias-recomendadas.pdf" class="btn-download" download>
-                        <span>Descargar PDF</span>
+                    <div class="resource-icon">❓</div>
+                    <h3>¿Qué necesitas?</h3>
+                    <p>Cuéntanos qué tipo de recursos te serían más útiles para priorizar su creación.</p>
+                    <a href="formulario.html" class="btn-download">
+                        <span>Sugerir</span>
                     </a>
                 </div>
             </div>
         </div>
 
         <div class="panel">
-            <h2>🔗 Enlaces Importantes</h2>
-            <p>Organizaciones, asociaciones y recursos en línea de utilidad</p>
+            <h2>🔗 Enlaces Útiles</h2>
+            <p>Organizaciones y recursos existentes que pueden ayudar</p>
             
             <ul class="links-list">
                 <li>
@@ -365,77 +82,15 @@
                     <span class="tag tag-link">Enlace</span>
                 </li>
                 <li>
-                    <a href="https://www.orphananesthesia.eu" target="_blank">OrphanAnesthesia - Guías de anestesia</a>
-                    <span class="tag tag-pdf">PDF</span>
-                </li>
-                <li>
-                    <a href="https://www.genecards.org" target="_blank">GeneCards - Base de datos de genes</a>
+                    <a href="https://medlineplus.gov/spanish/genetics/condition/15q112-microdeletion/" target="_blank">MedlinePlus - Información en español</a>
                     <span class="tag tag-link">Enlace</span>
-                </li>
-                <li>
-                    <a href="https://www.facebook.com/groups/microdelecion15q" target="_blank">Grupo de apoyo en Facebook</a>
-                    <span class="tag tag-link">Red social</span>
-                </li>
-            </ul>
-        </div>
-
-        <div class="panel">
-            <h2>📊 Formularios y Plantillas</h2>
-            <p>Documentos útiles para el seguimiento y registro de información</p>
-            
-            <div class="resources-grid">
-                <div class="resource-card">
-                    <div class="resource-icon">📝</div>
-                    <h3>Registro de Síntomas</h3>
-                    <p>Plantilla para llevar un registro detallado de síntomas y evolución.</p>
-                    <a href="https://github.com/Evelez23/microdelecion-15q11.2/raw/main/resources/registro-sintomas.pdf" class="btn-download" download>
-                        <span>Descargar PDF</span>
-                    </a>
-                </div>
-                
-                <div class="resource-card">
-                    <div class="resource-icon">💊</div>
-                    <h3>Control de Medicación</h3>
-                    <p>Plantilla para registrar medicamentos, dosis y horarios.</p>
-                    <a href="https://github.com/Evelez23/microdelecion-15q11.2/raw/main/resources/control-medicacion.pdf" class="btn-download" download>
-                        <span>Descargar PDF</span>
-                    </a>
-                </div>
-                
-                <div class="resource-card">
-                    <div class="resource-icon">🏥</div>
-                    <h3>Historial Médico</h3>
-                    <p>Formulario para mantener un historial médico completo y organizado.</p>
-                    <a href="https://github.com/Evelez23/microdelecion-15q11.2/raw/main/resources/historial-medico.pdf" class="btn-download" download>
-                        <span>Descargar PDF</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="panel">
-            <h2>🎥 Videos y Multimedia</h2>
-            <p>Material audiovisual educativo sobre microdeleción 15q11.2</p>
-            
-            <ul class="links-list">
-                <li>
-                    <a href="https://youtube.com/playlist?list=PLx7gQ0Sb0pqiqQe1kbcKOa4nGc1JgQf_" target="_blank">Conferencias médicas sobre 15q11.2</a>
-                    <span class="tag tag-link">YouTube</span>
-                </li>
-                <li>
-                    <a href="https://youtube.com/playlist?list=PLx7gQ0Sb0pqiVrNMPoUmW2u3g6i7T4WZx" target="_blank">Testimonios de familias</a>
-                    <span class="tag tag-link">YouTube</span>
-                </li>
-                <li>
-                    <a href="https://youtube.com/playlist?list=PLx7gQ0Sb0pqhQ4Y7vq9G9n7M8tJkLm6Np" target="_blank">Terapias y ejercicios prácticos</a>
-                    <span class="tag tag-link">YouTube</span>
                 </li>
             </ul>
         </div>
     </section>
 
     <footer class="footer">
-        <p>© 2025 | Microdeleción 15q11.2 - Todos los recursos proporcionados son con fines informativos y educativos.</p>
+        <p>© 2025 | Microdeleción 15q11.2 - Juntos construyendo una comunidad más informada</p>
     </footer>
 </body>
 </html>
