@@ -280,6 +280,54 @@
       margin-left: 10px;
     }
 
+    /* Nuevos estilos para la sección de terapias */
+    .terapias-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .terapia-categoria {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 15px;
+    }
+
+    .terapia-categoria h3 {
+      color: var(--primary);
+      margin-bottom: 15px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .terapia-item {
+      margin-bottom: 12px;
+      padding-left: 15px;
+      border-left: 3px solid var(--ok);
+    }
+
+    .terapia-tipo {
+      font-weight: 600;
+      color: var(--text);
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .terapia-desc {
+      font-size: 0.9em;
+      color: var(--muted);
+    }
+
+    .terapia-ejemplo {
+      display: block;
+      font-style: italic;
+      font-size: 0.85em;
+      color: var(--primary);
+      margin-top: 4px;
+    }
+
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
@@ -287,6 +335,10 @@
     @media (max-width: 768px) {
       .grid-4 {
         grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .terapias-container {
+        grid-template-columns: 1fr;
       }
     }
 
@@ -385,12 +437,83 @@
         </div>
       </div>
 
-      <!-- Distribución de terapias -->
+      <!-- Distribución de terapias - SECCIÓN ACTUALIZADA -->
       <div class="panel">
         <h2>Terapias más comunes</h2>
         <canvas id="chartTerapias" height="160" aria-label="Terapias más comunes"></canvas>
         <div class="chart-footer">
           <p>💪 <strong>Intervención:</strong> <span id="terapias-multiples">0%</span> utiliza intervención multidisciplinaria</p>
+        </div>
+        
+        <!-- Resumen de terapias basado en la imagen proporcionada -->
+        <div class="terapias-container">
+          <div class="terapia-categoria">
+            <h3>Terapias Principales</h3>
+            <div class="terapia-item">
+              <span class="terapia-tipo">Logopedia</span>
+              <span class="terapia-desc">Para mejorar el desarrollo del lenguaje y problemas de deglución</span>
+              <span class="terapia-ejemplo">Algunos niños usan espesantes para líquidos debido a la hipotonía</span>
+            </div>
+            <div class="terapia-item">
+              <span class="terapia-tipo">Psicoterapia/Terapia Conductual</span>
+              <span class="terapia-desc">Manejo de crisis emocionales, TDAH y trastornos de conducta</span>
+            </div>
+            <div class="terapia-item">
+              <span class="terapia-tipo">Fisioterapia</span>
+              <span class="terapia-desc">Para hipotonía (bajo tono muscular) y problemas de coordinación</span>
+            </div>
+            <div class="terapia-item">
+              <span class="terapia-tipo">Terapia Ocupacional</span>
+              <span class="terapia-desc">Integración sensorial</span>
+              <span class="terapia-ejemplo">Ejemplo: Dificultad para tolerar texturas</span>
+            </div>
+            <div class="terapia-item">
+              <span class="terapia-tipo">Intervención Educativa</span>
+              <span class="terapia-desc">Apoyos en el aula (adaptaciones curriculares)</span>
+              <span class="terapia-ejemplo">Uso de ordenadores para comunicación</span>
+            </div>
+          </div>
+          
+          <div class="terapia-categoria">
+            <h3>Intervenciones Médicas</h3>
+            <div class="terapia-item">
+              <span class="terapia-tipo">Medicación Psiquiátrica</span>
+              <span class="terapia-desc">Antipsicóticos/Estabilizadores del estado de ánimo</span>
+              <span class="terapia-ejemplo">Ejemplo: Risperidona</span>
+            </div>
+            <div class="terapia-item">
+              <span class="terapia-tipo">Estimulantes</span>
+              <span class="terapia-desc">Para tratamiento de TDAH</span>
+              <span class="terapia-ejemplo">Ejemplo: Metilfenidato</span>
+            </div>
+            <div class="terapia-item">
+              <span class="terapia-tipo">Antiepilépticos</span>
+              <span class="terapia-desc">Para epilepsia o como estabilizadores del ánimo</span>
+              <span class="terapia-ejemplo">Ejemplo: Topamax (Topiramato)</span>
+            </div>
+            <div class="terapia-item">
+              <span class="terapia-tipo">Suplementación</span>
+              <span class="terapia-desc">Magnesio (asociado con mejoras en TDAH)</span>
+            </div>
+          </div>
+          
+          <div class="terapia-categoria">
+            <h3>Terapias Complementarias</h3>
+            <div class="terapia-item">
+              <span class="terapia-tipo">Integración Sensorial</span>
+              <span class="terapia-desc">Para hipersensibilidad a sonidos fuertes</span>
+              <span class="terapia-ejemplo">Niños que usan cascos para reducir estímulos auditivos</span>
+            </div>
+            <div class="terapia-item">
+              <span class="terapia-tipo">Intervención Nutricional</span>
+              <span class="terapia-desc">Dietas sin caseína/gluten, probióticos y omega-3</span>
+            </div>
+            <div class="terapia-item">
+              <span class="terapia-tipo">Terapias con Animales</span>
+              <span class="terapia-desc">Equinoterapia e hipoterapia</span>
+              <span class="terapia-desc">Beneficios a nivel motor y emocional</span>
+            </div>
+          </div>
         </div>
       </div>
 
