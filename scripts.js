@@ -109,6 +109,20 @@ function humanAgeSex(r) {
   if (r.genero === 'Femenino') return esNino ? 'niña' : 'mujer';
   return esNino ? 'menor' : 'persona adulta';
 }
+<!-- Agrega esta función en scripts.js -->
+function optimizarImagenes() {
+  document.querySelectorAll('img').forEach(img => {
+    // Lazy loading nativo
+    img.loading = 'lazy';
+    
+    // Agregar transición suave
+    img.style.transition = 'opacity 0.3s ease';
+    img.onload = function() {
+      this.style.opacity = '1';
+    };
+    img.style.opacity = '0';
+  });
+}
 
 // ======================
 // NAVEGACIÓN
