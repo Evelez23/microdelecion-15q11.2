@@ -484,23 +484,32 @@
       return countryFlags.default;
     }
 
-    // Función auxiliar para detectar país
+    // Función auxiliar para detectar país - CORREGIDA
     function detectarPais(lugar) {
       if (!lugar) return 'Desconocido';
+      
       const lugarLower = lugar.toLowerCase();
+      
+      // Lista de países y sus ciudades/indicadores
       const paises = {
         'españa': ['malaga', 'málaga', 'madrid', 'barcelona', 'sevilla', 'valencia', 'bilbao'],
         'argentina': ['buenos aires', 'córdoba', 'rosario', 'mendoza'],
         'méxico': ['méxico', 'mexico', 'cdmx', 'guadalajara', 'monterrey'],
         'colombia': ['bogotá', 'bogota', 'medellín', 'medellin', 'cali'],
         'chile': ['santiago', 'valparaíso', 'valparaiso', 'concepción', 'concepcion'],
-        'honduras': ['tegucigalpa', 'san pedro sula'],
-        'default': lugar
+        'honduras': ['tegucigalpa', 'san pedro sula']
       };
+      
+      // Buscar coincidencias
       for (const [pais, ciudades] of Object.entries(paises)) {
-        if (ciudades.some(ciudad => lugarLower.includes(ciudad))) return pais;
+        // Verificar si ciudades es un array antes de usar some()
+        if (Array.isArray(ciudades) && ciudades.some(ciudad => lugarLower.includes(ciudad))) {
+          return pais;
+        }
       }
-      return paises.default;
+      
+      // Si no se encuentra ninguna coincidencia, devolver el lugar original
+      return lugar;
     }
 
     // Función principal para inicializar las estadísticas
@@ -647,7 +656,7 @@
           });
         }
 
-        // 6. PAÍSES
+        // 6. PAÍSES - CORREGIDO
         const paisesContainer = document.getElementById('paises-container');
         if (paisesContainer) {
           const paisesCount = {};
