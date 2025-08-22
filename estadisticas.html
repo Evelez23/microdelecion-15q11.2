@@ -376,34 +376,317 @@
         </div>
       </div>
 
-      <!-- Mapa de países -->
-      <div class="panel">
-        <h2>Presencia Internacional</h2>
-        <div id="paises-container" class="paises-grid">
-          <div class="pais-loading">Cargando países...</div>
-        </div>
-        <div class="chart-footer">
-          <p>🌍 <strong>Cobertura:</strong> Comunidad activa en múltiples países</p>
-        </div>
-      </div>
+      <div id="loading" class="loading">Cargando datos estadísticos...</div>
 
-      <!-- Terapias e intervenciones -->
-      <div class="panel">
-        <h2>Intervenciones y Terapias</h2>
-        <canvas id="chartTerapias" height="160" aria-label="Tipos de terapias utilizadas"></canvas>
-        <div class="chart-footer">
-          <p>💪 <strong>Enfoque:</strong> <span id="terapias-multiples">0%</span> utiliza intervención multidisciplinaria</p>
-        </div>
-      </div>
+        <div id="stats-container" style="display: none;">
+            <div class="panel">
+                <h2>Resumen General</h2>
+                <div class="grid-4">
+                    <div class="kpi">
+                        <h3 id="total-casos">0</h3>
+                        <p>Total de casos</p>
+                    </div>
+                    <div class="kpi">
+                        <h3 id="edad-promedio">0</h3>
+                        <p>Edad promedio</p>
+                    </div>
+                    <div class="kpi">
+                        <h3 id="total-paises">0</h3>
+                        <p>Países</p>
+                    </div>
+                    <div class="kpi">
+                        <h3 id="porcentaje-validados">0%</h3>
+                        <p>Casos validados</p>
+                    </div>
+                </div>
+            </div>
 
-      <!-- Niveles de gravedad -->
-      <div class="panel">
-        <h2>Niveles de Afectación</h2>
-        <canvas id="chartGravedad" height="160" aria-label="Distribución por niveles de gravedad"></canvas>
-        <div class="chart-footer">
-          <p>📊 <strong>Variabilidad:</strong> Amplio espectro en manifestaciones clínicas</p>
+            <div class="stats-grid">
+                <div class="panel">
+                  
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="panel">
+
+                <div class="panel">
+                    <h2>💪 Intervenciones y Terapias</h2>
+                    <div id="terapias-stats">
+                        <p>Enfoque: <span id="terapias-multiples">0%</span> utiliza intervención multidisciplinaria</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h2>🌍 Presencia Internacional</h2>
+                <p>Cobertura: Comunidad activa en múltiples países</p>
+                <div id="paises-stats" class="country-grid">
+                    <!-- Countries will be inserted here -->
+                </div>
+            </div>
+
+            <div class="panel">
+                <h2>📊 Niveles de Afectación</h2>
+                <div id="afectacion-stats">
+                    <div id="afectacion-chart">
+                        <!-- Afectación chart will be inserted here -->
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+    </div>
+
+    <footer class="footer">
+        <p>Estadísticas de la comunidad de Microdeleción 15q11.2 | Actualizado: Agosto 2025</p>
+    </footer>
+
+    <script>
+        // URLs de los archivos JSON
+        const URL_VALIDADOS = 'https://raw.githubusercontent.com/Evelez23/microdelecion-15q11.2/main/data/casos_validados.json';
+        const URL_NO_VALIDADOS = 'https://raw.githubusercontent.com/Evelez23/microdelecion-15q11.2/main/data/casos_no_validados.json';
+
+        // Banderas por país
+        const countryFlags = {
+            'España': '🇪🇸',
+            'México': '🇲🇽',
+            'Argentina': '🇦🇷',
+            'Colombia': '🇨🇴',
+            'Honduras': '🇭🇳',
+            'Chile': '🇨🇱',
+            'Perú': '🇵🇪',
+            'Venezuela': '🇻🇪',
+            'Estados Unidos': '🇺🇸',
+            'default': '🌍'
+        };
+
+        // Función para normalizar los datos
+        function normalizeData(casos) {
+            return casos.map(caso => {
+                // Normalizar localización
+                let localizacion = caso.Localizacion || caso.Localización || 'No especificado';
+                
+                // Extraer país desde la localización
+                let pais = 'No especificado';
+                if (localizacion.includes(',')) {
+                    pais = localizacion.split(',')[1].trim();
+                } else if (localizacion !== 'No especificado') {
+                    pais = localizacion;
+                }
+                
+                // Normalizar edad
+                let edad = 0;
+                if (caso.Edad !== undefined) {
+                    if (typeof caso.Edad === 'string') {
+                        edad = parseInt(caso.Edad) || 0;
+                    } else {
+                        edad = caso.Edad;
+                    }
+                } else if (caso['Edad '] !== undefined) {
+                    if (typeof caso['Edad '] === 'string') {
+                        edad = parseInt(caso['Edad ']) || 0;
+                    } else {
+                        edad = caso['Edad '];
+                    }
+                }
+                
+                // Normalizar género
+                let genero = 'No especificado';
+                if (caso.Género) {
+                    genero = caso.Género;
+                    if (genero === 'M') genero = 'Masculino';
+                    if (genero === 'F') genero = 'Femenino';
+                }
+                
+                return {
+                    nombre: caso.Nombre || 'No especificado',
+                    edad: edad,
+                    genero: genero,
+                    localizacion: localizacion,
+                    pais: pais,
+                    sintomas: caso['síntomas principales'] || caso['síntomas principales  '] || 'No especificado',
+                    afectacion: caso['Nivel de afectación'] || 'No especificado',
+                    terapias: caso['Terapias recibidas'] || caso['Terapias recibidas\n(logopedia, psicoterapia, etc.):  '] || 'No especificado'
+                };
+            });
+        }
+
+        // Función para analizar los datos y generar estadísticas
+        function analyzeData(validados, noValidados) {
+            const todosCasos = [...validados, ...noValidados];
+            const totalCasos = todosCasos.length;
+            const totalValidados = validados.length;
+            
+            // Calcular edad promedio
+            const edades = todosCasos.map(c => c.edad).filter(edad => edad > 0);
+            const edadPromedio = edades.length ? Math.round(edades.reduce((a, b) => a + b, 0) / edades.length) : 0;
+            
+            // Calcular países únicos
+            const paises = todosCasos.map(c => c.pais).filter(p => p !== 'No especificado');
+            const paisesUnicos = [...new Set(paises)];
+            
+            // Calcular distribución por género
+            const generos = todosCasos.map(c => c.genero);
+            const conteoGeneros = {};
+            generos.forEach(g => {
+                if (g !== 'No especificado') {
+                    conteoGeneros[g] = (conteoGeneros[g] || 0) + 1;
+                }
+            });
+            
+            // Calcular síntomas múltiples
+            const casosConMultiplesSintomas = todosCasos.filter(c => {
+                return c.sintomas.includes(';') || c.sintomas.includes(',') || 
+                      (c.sintomas.toLowerCase().includes('y ') && c.sintomas !== 'No especificado');
+            });
+            const porcentajeSintomasMultiples = Math.round((casosConMultiplesSintomas.length / totalCasos) * 100);
+            
+            // Calcular terapias múltiples
+            const casosConMultiplesTerapias = todosCasos.filter(c => {
+                return c.terapias.includes(',') || c.terapias.includes(';') || 
+                      (c.terapias.toLowerCase().includes('y ') && c.terapias !== 'No especificado');
+            });
+            const porcentajeTerapiasMultiples = Math.round((casosConMultiplesTerapias.length / totalCasos) * 100);
+            
+            // Distribución por nivel de afectación
+            const conteoAfectacion = {};
+            todosCasos.forEach(c => {
+                if (c.afectacion !== 'No especificado') {
+                    // Simplificar categorías de afectación
+                    let categoria = c.afectacion;
+                    if (categoria.includes('Leve')) categoria = 'Leve';
+                    if (categoria.includes('Moderado')) categoria = 'Moderado';
+                    if (categoria.includes('Grave')) categoria = 'Grave';
+                    
+                    conteoAfectacion[categoria] = (conteoAfectacion[categoria] || 0) + 1;
+                }
+            });
+            
+            return {
+                totalCasos,
+                totalValidados,
+                porcentajeValidados: Math.round((totalValidados / totalCasos) * 100),
+                edadPromedio,
+                totalPaises: paisesUnicos.length,
+                paises: paisesUnicos,
+                conteoGeneros,
+                porcentajeSintomasMultiples,
+                porcentajeTerapiasMultiples,
+                conteoAfectacion
+            };
+        }
+
+        // Función para mostrar las estadísticas en la UI
+        function displayStats(stats) {
+            // Actualizar KPIs
+            document.getElementById('total-casos').textContent = stats.totalCasos;
+            document.getElementById('edad-promedio').textContent = stats.edadPromedio;
+            document.getElementById('total-paises').textContent = stats.totalPaises;
+            document.getElementById('porcentaje-validados').textContent = `${stats.porcentajeValidados}%`;
+            
+            // Actualizar síntomas
+            document.getElementById('sintomas-multiples').textContent = `${stats.porcentajeSintomasMultiples}%`;
+            document.querySelector('#sintomas-stats .progress-fill').style.width = `${stats.porcentajeSintomasMultiples}%`;
+            
+            // Actualizar terapias
+            document.getElementById('terapias-multiples').textContent = `${stats.porcentajeTerapiasMultiples}%`;
+            document.querySelector('#terapias-stats .progress-fill').style.width = `${stats.porcentajeTerapiasMultiples}%`;
+            
+            // Mostrar países
+            const paisesContainer = document.getElementById('paises-stats');
+            paisesContainer.innerHTML = '';
+            
+            stats.paises.forEach(pais => {
+                const flag = countryFlags[pais] || countryFlags.default;
+                const div = document.createElement('div');
+                div.className = 'country-item';
+                div.innerHTML = `
+                    <div class="country-flag">${flag}</div>
+                    <div>${pais}</div>
+                `;
+                paisesContainer.appendChild(div);
+            });
+            
+            // Mostrar distribución por género (simplificado)
+            const generoContainer = document.getElementById('genero-chart');
+            generoContainer.innerHTML = '';
+            
+            for (const [genero, count] of Object.entries(stats.conteoGeneros)) {
+                const porcentaje = Math.round((count / stats.totalCasos) * 100);
+                const div = document.createElement('div');
+                div.innerHTML = `
+                    <p>${genero}: ${count} (${porcentaje}%)</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${porcentaje}%"></div>
+                    </div>
+                `;
+                generoContainer.appendChild(div);
+            }
+            
+            // Mostrar distribución por afectación (simplificado)
+            const afectacionContainer = document.getElementById('afectacion-chart');
+            afectacionContainer.innerHTML = '';
+            
+            for (const [nivel, count] of Object.entries(stats.conteoAfectacion)) {
+                const porcentaje = Math.round((count / stats.totalCasos) * 100);
+                const div = document.createElement('div');
+                div.innerHTML = `
+                    <p>${nivel}: ${count} (${porcentaje}%)</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${porcentaje}%"></div>
+                    </div>
+                `;
+                afectacionContainer.appendChild(div);
+            }
+            
+            // Ocultar loading y mostrar stats
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('stats-container').style.display = 'block';
+        }
+
+        // Función principal para cargar y procesar los datos
+        async function loadData() {
+            try {
+                // Cargar ambos archivos JSON
+                const [responseValidados, responseNoValidados] = await Promise.all([
+                    fetch(URL_VALIDADOS),
+                    fetch(URL_NO_VALIDADOS)
+                ]);
+                
+                if (!responseValidados.ok || !responseNoValidados.ok) {
+                    throw new Error('Error al cargar los datos');
+                }
+                
+                const validados = await responseValidados.json();
+                const noValidados = await responseNoValidados.json();
+                
+                // Normalizar datos
+                const validadosNormalizados = normalizeData(validados);
+                const noValidadosNormalizados = normalizeData(noValidados);
+                
+                // Analizar datos
+                const stats = analyzeData(validadosNormalizados, noValidadosNormalizados);
+                
+                // Mostrar estadísticas
+                displayStats(stats);
+                
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('loading').innerHTML = `
+                    <p>Error al cargar los datos: ${error.message}</p>
+                    <p>Verifica que los archivos JSON estén accesibles públicamente en GitHub.</p>
+                    <button class="button" onclick="loadData()">Reintentar</button>
+                `;
+            }
+        }
+
+        // Iniciar la carga de datos cuando la página esté lista
+        document.addEventListener('DOMContentLoaded', loadData);
+    </script>
 
       <!-- Insights adicionales -->
       <div class="panel">
