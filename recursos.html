@@ -337,6 +337,55 @@
             background: #7df0d3;
         }
         
+        .suggestions-container {
+            margin-top: 30px;
+        }
+        
+        .suggestions-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+        
+        .suggestion-item {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: var(--border-radius);
+            padding: 15px;
+            margin-bottom: 12px;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .suggestion-text {
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+        
+        .suggestion-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--muted);
+            font-size: 0.9em;
+        }
+        
+        .no-suggestions {
+            text-align: center;
+            padding: 30px;
+            color: var(--muted);
+            font-style: italic;
+        }
+        
+        .toggle-suggestions {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            border: none;
+            padding: 10px 15px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
         @media (max-width: 768px) {
             .resources-grid, .brochure-grid {
                 grid-template-columns: 1fr;
@@ -344,6 +393,11 @@
             
             .container {
                 padding: 16px;
+            }
+            
+            .suggestion-meta {
+                flex-direction: column;
+                gap: 5px;
             }
         }
     </style>
@@ -371,6 +425,7 @@
         <h1>Recursos Prácticos</h1>
         <p class="subtitle">Herramientas útiles para el día a día con microdeleción 15q11.2</p>
 
+        <!-- Secciones anteriores se mantienen igual -->
         <div class="panel">
             <h2>📋 Documentos Descargables</h2>
             <p>Material práctico basado en la experiencia de nuestra comunidad</p>
@@ -516,6 +571,24 @@
                     <button type="submit" class="btn-submit">Enviar Sugerencia</button>
                 </form>
             </div>
+
+            <!-- NUEVA SECCIÓN: SUGERENCIAS DE LA COMUNIDAD -->
+            <div class="suggestions-container">
+                <h3>💬 Sugerencias de la comunidad</h3>
+                <button class="toggle-suggestions" onclick="toggleSuggestions()">
+                    <span id="toggle-icon">▼</span>
+                    <span id="toggle-text">Ver sugerencias</span>
+                </button>
+                
+                <div id="suggestions-list" style="display: none;">
+                    <ul class="suggestions-list" id="suggestions-container">
+                        <!-- Las sugerencias se cargarán aquí con JavaScript -->
+                    </ul>
+                    <div class="no-suggestions" id="no-suggestions" style="display: none;">
+                        Aún no hay sugerencias. ¡Sé el primero en compartir tus ideas!
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -524,19 +597,101 @@
     </footer>
 
     <script>
-        // Script para manejar el formulario de sugerencias
+        // Almacenamiento de sugerencias
+        const STORAGE_KEY = 'suggestions_15q11';
+        
+        // Cargar sugerencias al iniciar
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSuggestions();
+        });
+        
+        // Función para cargar sugerencias
+        function loadSuggestions() {
+            const suggestions = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+            const container = document.getElementById('suggestions-container');
+            const noSuggestions = document.getElementById('no-suggestions');
+            
+            container.innerHTML = '';
+            
+            if (suggestions.length === 0) {
+                noSuggestions.style.display = 'block';
+                return;
+            }
+            
+            noSuggestions.style.display = 'none';
+            
+            // Mostrar sugerencias en orden inverso (más recientes primero)
+            suggestions.reverse().forEach(suggestion => {
+                const li = document.createElement('li');
+                li.className = 'suggestion-item';
+                
+                const date = new Date(suggestion.date);
+                const formattedDate = date.toLocaleDateString('es-ES', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                
+                li.innerHTML = `
+                    <div class="suggestion-text">${suggestion.text}</div>
+                    <div class="suggestion-meta">
+                        <span>Por: ${suggestion.name || 'Anónimo'}</span>
+                        <span>${formattedDate}</span>
+                    </div>
+                `;
+                
+                container.appendChild(li);
+            });
+        }
+        
+        // Función para togglear la visibilidad de sugerencias
+        function toggleSuggestions() {
+            const suggestionsList = document.getElementById('suggestions-list');
+            const toggleIcon = document.getElementById('toggle-icon');
+            const toggleText = document.getElementById('toggle-text');
+            
+            if (suggestionsList.style.display === 'none') {
+                suggestionsList.style.display = 'block';
+                toggleIcon.textContent = '▲';
+                toggleText.textContent = 'Ocultar sugerencias';
+            } else {
+                suggestionsList.style.display = 'none';
+                toggleIcon.textContent = '▼';
+                toggleText.textContent = 'Ver sugerencias';
+            }
+        }
+        
+        // Manejar el formulario de sugerencias
         document.getElementById('suggestionForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const suggestion = document.getElementById('suggestion').value;
-            const name = document.getElementById('name').value || 'Anónimo';
+            const nameInput = document.getElementById('name');
+            const suggestionInput = document.getElementById('suggestion');
             
-            // Aquí normalmente enviarías los datos a un servidor
-            // Por ahora solo mostraremos una alerta
-            alert(`¡Gracias ${name} por tu sugerencia!\n\nHemos recibido: "${suggestion}"\n\nLo tendremos en cuenta para futuros recursos.`);
+            const suggestion = {
+                name: nameInput.value.trim(),
+                text: suggestionInput.value.trim(),
+                date: new Date().toISOString()
+            };
             
-            // Limpiar el formulario
-            document.getElementById('suggestionForm').reset();
+            if (!suggestion.text) return;
+            
+            // Guardar sugerencia
+            const suggestions = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+            suggestions.push(suggestion);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(suggestions));
+            
+            // Mostrar mensaje de éxito
+            alert(`¡Gracias ${suggestion.name || 'Anónimo'} por tu sugerencia!\n\nTu idea será considerada para futuros recursos.`);
+            
+            // Limpiar formulario y recargar sugerencias
+            this.reset();
+            loadSuggestions();
+            
+            // Mostrar las sugerencias si estaban ocultas
+            document.getElementById('suggestions-list').style.display = 'block';
+            document.getElementById('toggle-icon').textContent = '▲';
+            document.getElementById('toggle-text').textContent = 'Ocultar sugerencias';
         });
     </script>
 </body>
