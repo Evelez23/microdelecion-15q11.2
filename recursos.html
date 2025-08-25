@@ -264,8 +264,81 @@
             margin: 20px 0;
         }
         
+        .brochure-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .brochure-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--border-radius);
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .brochure-item:hover {
+            transform: translateY(-3px);
+        }
+        
+        .brochure-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--ok);
+        }
+        
+        .suggestion-form {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--text);
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text);
+            font-family: inherit;
+        }
+        
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .btn-submit {
+            background: var(--ok);
+            color: var(--bg);
+            border: none;
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: background .2s ease;
+        }
+        
+        .btn-submit:hover {
+            background: #7df0d3;
+        }
+        
         @media (max-width: 768px) {
-            .resources-grid {
+            .resources-grid, .brochure-grid {
                 grid-template-columns: 1fr;
             }
             
@@ -307,7 +380,7 @@
                     <div class="resource-icon">📝</div>
                     <h3>Registro de Síntomas</h3>
                     <p>Plantilla para llevar un control detallado de síntomas, tratamientos y evolución.</p>
-                    <a href="resources/registro-sintomas.pdf" class="btn-download" download>
+                    <a href="https://github.com/Evelez23/microdelecion-15q11.2/raw/main/resources/registro-sintomas.pdf" class="btn-download" download>
                         <span>Descargar PDF</span>
                     </a>
                 </div>
@@ -316,17 +389,63 @@
                     <div class="resource-icon">❓</div>
                     <h3>Preguntas para Especialistas</h3>
                     <p>Lista de preguntas importantes para hacer en consultas con genetistas y neurólogos.</p>
-                    <a href="https://github.com/Evelez23/microdelecion-15q11.2/blob/main/resources/preguntas-genetista.pdf.pdf" class="btn-download" download>
+                    <a href="https://github.com/Evelez23/microdelecion-15q11.2/raw/main/resources/preguntas-genetista.pdf" class="btn-download" download>
                         <span>Descargar PDF</span>
                     </a>
                 </div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h2>📚 Folletos Informativos</h2>
+            <p>Documentos compartidos por la comunidad sobre diferentes aspectos de la microdeleción</p>
+            
+            <div class="brochure-grid">
+                <div class="brochure-item">
+                    <div class="brochure-icon">⚡</div>
+                    <h3>Epilepsia en pacientes</h3>
+                    <a href="https://github.com/Evelez23/microdelecion-15q11.2/raw/main/resources/Epilepsia%20en%20pacientes%20con%20síndrome%20INVDUP15.pdf" class="btn-download" download>
+                        <span>Descargar</span>
+                    </a>
+                </div>
                 
-                <div class="resource-card">
-                    <div class="resource-icon">👥</div>
-                    <h3>Directorio de Contactos</h3>
-                    <p>Profesionales y centros especializados recomendados por la comunidad.</p>
-                    <a href="resources/directorio-contactos.pdf" class="btn-download" download>
-                        <span>Descargar PDF</span>
+                <div class="brochure-item">
+                    <div class="brochure-icon">😴</div>
+                    <h3>Importancia del sueño</h3>
+                    <a href="https://github.com/Evelez23/microdelecion-15q11.2/raw/main/resources/Importancia%20del%20sueño%20en%20encefalopatías%20epilépticas.pdf" class="btn-download" download>
+                        <span>Descargar</span>
+                    </a>
+                </div>
+                
+                <div class="brochure-item">
+                    <div class="brochure-icon">🧬</div>
+                    <h3>Microdeleciones 15q11.2</h3>
+                    <a href="https://github.com/Evelez23/microdelecion-15q11.2/raw/main/resources/Microdeleciones%2015q11.2.pdf" class="btn-download" download>
+                        <span>Descargar</span>
+                    </a>
+                </div>
+                
+                <div class="brochure-item">
+                    <div class="brochure-icon">🔬</div>
+                    <h3>Novedades científicas</h3>
+                    <a href="https://github.com/Evelez23/microdelecion-15q11.2/raw/main/resources/NOVEDADES%20CIENTÍFICAS%20EN%20INV-DUP%2015%20Dr.pdf" class="btn-download" download>
+                        <span>Descargar</span>
+                    </a>
+                </div>
+                
+                <div class="brochure-item">
+                    <div class="brochure-icon">🏥</div>
+                    <h3>Proyecto diagnóstico</h3>
+                    <a href="https://github.com/Evelez23/microdelecion-15q11.2/raw/main/resources/PROYECTO%20DE%20DIAGNÓSTICO%20SEGUIMIENTO%20Y%20TRATAMIENTO.pdf" class="btn-download" download>
+                        <span>Descargar</span>
+                    </a>
+                </div>
+                
+                <div class="brochure-item">
+                    <div class="brochure-icon">🆕</div>
+                    <h3>Nuevo síndrome</h3>
+                    <a href="https://github.com/Evelez23/microdelecion-15q11.2/raw/main/resources/Un%20nuevo%20síndrome%20con%20expresividad%20variable.pdf" class="btn-download" download>
+                        <span>Descargar</span>
                     </a>
                 </div>
             </div>
@@ -342,7 +461,7 @@
                     <span class="tag tag-link">Inglés</span>
                 </li>
                 <li>
-                    <a href="https://medlineplus.gov/spanish/ency/article/002048.htm" target="_blank">MedlinePlus - Información en español</a>
+                    <a href="https://medlineplus.gov/spanish/genetics/condition/15q112-microdeletion/" target="_blank">MedlinePlus - Información en español</a>
                     <span class="tag tag-link">Español</span>
                 </li>
                 <li>
@@ -350,8 +469,8 @@
                     <span class="tag tag-link">Inglés</span>
                 </li>
                 <li>
-                    <a href="https://www.instagram.com/sindromedelecion15q11.2/" target="_blank">Grupo de Apoyo en Instagram</a>
-                    <span class="tag tag-link">Comunidad</span>
+                    <a href="https://www.instagram.com/sindromedelecion15q11.2" target="_blank">Síndrome Deleción 15q11.2 en Instagram</a>
+                    <span class="tag tag-link">Red social</span>
                 </li>
             </ul>
         </div>
@@ -360,29 +479,42 @@
             <h2>🚀 Próximos Recursos</h2>
             <p>Estamos trabajando en crear más materiales útiles para la comunidad</p>
             
-            <div class="coming-soon">
-                <div class="resource-icon">🛠️</div>
-                <h3>En Desarrollo</h3>
-                <p>¿Qué recursos te gustaría que agreguemos? ¡Déjanos tus sugerencias!</p>
-                <a href="formulario.html" class="btn-download">
-                    <span>Enviar Sugerencia</span>
-                </a>
-            </div>
-            
             <div class="resources-grid">
+                <div class="resource-card">
+                    <div class="resource-icon">📞</div>
+                    <h3>Directorio de Contactos</h3>
+                    <p>Profesionales y centros especializados recomendados por la comunidad.</p>
+                    <span class="tag">En desarrollo</span>
+                </div>
+                
                 <div class="resource-card">
                     <div class="resource-icon">📊</div>
                     <h3>Guía de Terapias</h3>
                     <p>Tipos de terapias y su efectividad según nuestra comunidad.</p>
-                    <span class="tag">Próximamente</span>
+                    <span class="tag">En desarrollo</span>
                 </div>
                 
                 <div class="resource-card">
                     <div class="resource-icon">🏫</div>
                     <h3>Adaptaciones Escolares</h3>
                     <p>Estrategias para apoyar el aprendizaje en el aula.</p>
-                    <span class="tag">Próximamente</span>
+                    <span class="tag">En desarrollo</span>
                 </div>
+            </div>
+            
+            <div class="suggestion-form">
+                <h3>💡 ¿Qué recursos te gustaría que agreguemos?</h3>
+                <form id="suggestionForm">
+                    <div class="form-group">
+                        <label for="name">Nombre (opcional):</label>
+                        <input type="text" id="name" placeholder="Tu nombre">
+                    </div>
+                    <div class="form-group">
+                        <label for="suggestion">Tu sugerencia:</label>
+                        <textarea id="suggestion" placeholder="¿Qué tipo de recurso te sería más útil?" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">Enviar Sugerencia</button>
+                </form>
             </div>
         </div>
     </section>
@@ -390,5 +522,22 @@
     <footer class="footer">
         <p>© 2025 | Microdeleción 15q11.2 - Recursos creados por y para la comunidad</p>
     </footer>
+
+    <script>
+        // Script para manejar el formulario de sugerencias
+        document.getElementById('suggestionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const suggestion = document.getElementById('suggestion').value;
+            const name = document.getElementById('name').value || 'Anónimo';
+            
+            // Aquí normalmente enviarías los datos a un servidor
+            // Por ahora solo mostraremos una alerta
+            alert(`¡Gracias ${name} por tu sugerencia!\n\nHemos recibido: "${suggestion}"\n\nLo tendremos en cuenta para futuros recursos.`);
+            
+            // Limpiar el formulario
+            document.getElementById('suggestionForm').reset();
+        });
+    </script>
 </body>
 </html>
