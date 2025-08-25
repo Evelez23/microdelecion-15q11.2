@@ -5,12 +5,12 @@
     "Edad": 13,
     "Género": "Masculino",
     "Pruebas realizadas": "Array genético, EEG, resonancia",
-    "síntomas principales": "Autismo, TDAH, rasgos autistas, retraso mental (7 años de diferencia), agresividad, autolesiones, mentiras compulsivas",
+    "síntomas principales": "Autismo, TDAH, retraso mental (7 años), agresividad, autolesiones",
     "Nivel de afectación": "Moderado–grave",
     "Medicamentos actuales/pasados": "Risperidona 1,75 ml, Afibility 1 cp, Intuniv 3 mg",
     "Terapias recibidas": "Logopedia, psicoterapia",
     "¿Ha participado en estudios clinicos o geneticos?": "No especificados",
-    "Necesidades y Desafíos": "Gestión conductual, apoyo escolar, medicación variable"
+    "Necesidades y Desafíos": "Gestión conductual, apoyo escolar"
   },
   {
     "Nombre": "Dana",
@@ -18,16 +18,16 @@
     "Edad": 8,
     "Género": "Femenino",
     "Pruebas realizadas": "Array genético, pruebas de epilepsia (negativas)",
-    "síntomas principales": "Retraso madurativo severo (como bebé de 1 año), no habla, no anda, escoliosis, disfagia a líquidos, sensibilidad auditiva",
+    "síntomas principales": "Retraso madurativo severo, no habla, no anda, disfagia, escoliosis",
     "Nivel de afectación": "Grave",
     "Medicamentos actuales/pasados": "No especificados",
-    "Terapias recibidas": "Fisioterapia, logopedia, intervención temprana",
+    "Terapias recibidas": "Fisioterapia, logopedia",
     "¿Ha participado en estudios clinicos o geneticos?": "No especificados",
-    "Necesidades y Desafíos": "Apoyo de movilidad, alimentación espesa, intervención quirúrgica próxima"
+    "Necesidades y Desafíos": "Intervención quirúrgica, apoyo de movilidad"
   },
   {
-    "Nombre": "Carlos",
-    "Localizacion": "Barcelona",
+    "Nombre": "Carlos (21)",
+    "Localizacion": "Igualada, Barcelona",
     "Edad": 21,
     "Género": "Masculino",
     "Pruebas realizadas": "Array genético",
@@ -35,7 +35,7 @@
     "Nivel de afectación": "Leve",
     "Medicamentos actuales/pasados": "No especificados",
     "Terapias recibidas": "Educación especial, formación laboral",
-    "¿Ha participado en estudios clinicos o geneticos?": "Estudios genéticos en Sant Joan de Déu y Valle de Hebrón",
+    "¿Ha participado en estudios clinicos o geneticos?": "Sí, en Sant Joan de Déu y Valle de Hebrón",
     "Necesidades y Desafíos": "Transición a vida adulta y empleo"
   },
   {
@@ -49,7 +49,7 @@
     "Medicamentos actuales/pasados": "No especificados",
     "Terapias recibidas": "No especificados",
     "¿Ha participado en estudios clinicos o geneticos?": "No especificados",
-    "Necesidades y Desafíos": "No especificados"
+    "Necesidades y Desafíos": "Apoyo escolar"
   },
   {
     "Nombre": "Guille",
@@ -57,12 +57,12 @@
     "Edad": 7,
     "Género": "Masculino",
     "Pruebas realizadas": "Array genético",
-    "síntomas principales": "Atresia de esófago (corregida), ductus arterioso, autismo, retraso cognitivo, migrañas",
+    "síntomas principales": "Atresia de esófago corregida, ductus arterioso, autismo, migrañas",
     "Nivel de afectación": "Moderado",
-    "Medicamentos actuales/pasados": "Paracetamol, ibuprofeno para migrañas",
-    "Terapias recibidas": "Logopedia, estimulación temprana",
+    "Medicamentos actuales/pasados": "Paracetamol/ibuprofeno para migrañas",
+    "Terapias recibidas": "Estimulación temprana, logopedia",
     "¿Ha participado en estudios clinicos o geneticos?": "No especificados",
-    "Necesidades y Desafíos": "Dolor de cabeza recurrente, apoyo escolar"
+    "Necesidades y Desafíos": "Control de migrañas y apoyo escolar"
   },
   {
     "Nombre": "Ángel",
@@ -73,9 +73,9 @@
     "síntomas principales": "Retraso cognitivo, impulsividad, problemas de conducta",
     "Nivel de afectación": "Moderado",
     "Medicamentos actuales/pasados": "No especificados",
-    "Terapias recibidas": "No especificados",
+    "Terapias recibidas": "Apoyo conductual",
     "¿Ha participado en estudios clinicos o geneticos?": "No especificados",
-    "Necesidades y Desafíos": "Gestión conductual, apoyo escolar"
+    "Necesidades y Desafíos": "Gestión conductual y escolar"
   },
   {
     "Nombre": "Álex",
@@ -83,7 +83,7 @@
     "Edad": 12,
     "Género": "Masculino",
     "Pruebas realizadas": "Array genético",
-    "síntomas principales": "Problemas de aprendizaje (dislexia, discalculia)",
+    "síntomas principales": "Dislexia, discalculia",
     "Nivel de afectación": "Leve",
     "Medicamentos actuales/pasados": "No especificados",
     "Terapias recibidas": "Apoyo escolar",
@@ -95,103 +95,7 @@
     "Localizacion": "Madrid",
     "Edad": 7,
     "Género": "Femenino",
-    "Pruebas realizadas": "No especificados",
+    "Pruebas realizadas": "Array genético",
     "síntomas principales": "Autismo, problemas sensoriales alimentarios",
     "Nivel de afectación": "Leve",
     "Medicamentos actuales/pasados": "No especificados",
-    "Terapias recibidas": "Logopedia, estimulación sensorial",
-    "¿Ha participado en estudios clinicos o geneticos?": "No especificados",
-    "Necesidades y Desafíos": "Mejora de alimentación y socialización"
-  },
-  {
-    "Nombre": "Érika",
-    "Localizacion": "Alicante",
-    "Edad": 7,
-    "Género": "Femenino",
-    "Pruebas realizadas": "EEG, pruebas metabólicas",
-    "síntomas principales": "Epilepsia (posible Dravet sin gen), retraso cognitivo",
-    "Nivel de afectación": "Moderado–grave",
-    "Medicamentos actuales/pasados": "No especificados",
-    "Terapias recibidas": "No especificados",
-    "¿Ha participado en estudios clinicos o geneticos?": "Sí, seguimiento neurológico",
-    "Necesidades y Desafíos": "Control de crisis, apoyo escolar"
-  },
-  {
-    "Nombre": "Christian",
-    "Localizacion": "Valencia",
-    "Edad": 7,
-    "Género": "Masculino",
-    "Pruebas realizadas": "No especificados",
-    "síntomas principales": "Retraso del lenguaje",
-    "Nivel de afectación": "Leve",
-    "Medicamentos actuales/pasados": "No especificados",
-    "Terapias recibidas": "Logopedia",
-    "¿Ha participado en estudios clinicos o geneticos?": "No especificados",
-    "Necesidades y Desafíos": "Mejora comunicativa"
-  },
-  {
-    "Nombre": "Carmen",
-    "Localizacion": "Murcia, España",
-    "Edad": 3.5,
-    "Género": "Femenino",
-    "Pruebas realizadas": "Array genético",
-    "síntomas principales": "Displasia cleidocraneal + microdeleción, disfagia, dolor óseo, esternón hundido, vías respiratorias afectadas",
-    "Nivel de afectación": "Grave",
-    "Medicamentos actuales/pasados": "No especificados",
-    "Terapias recibidas": "Logopedia, fisioterapia, estimulación temprana",
-    "¿Ha participado en estudios clinicos o geneticos?": "Sí, investigación con peces cebra (Hospital Virgen de la Arrixaca)",
-    "Necesidades y Desafíos": "Dolor crónico, seguimiento ortopédico, necesidad de especialista en displasia"
-  },
-  {
-    "Nombre": "Aníbal",
-    "Localizacion": "Sevilla",
-    "Edad": 6,
-    "Género": "Masculino",
-    "Pruebas realizadas": "Array genético",
-    "síntomas principales": "Cardiopatía congénita, baja estatura",
-    "Nivel de afectación": "Leve",
-    "Medicamentos actuales/pasados": "No especificados",
-    "Terapias recibidas": "No especificados",
-    "¿Ha participado en estudios clinicos o geneticos?": "No especificados",
-    "Necesidades y Desafíos": "Seguimiento cardiológico"
-  },
-  {
-    "Nombre": "Claudia",
-    "Localizacion": "Sevilla",
-    "Edad": 12,
-    "Género": "Femenino",
-    "Pruebas realizadas": "Array genético",
-    "síntomas principales": "TDAH",
-    "Nivel de afectación": "Leve",
-    "Medicamentos actuales/pasados": "No especificados",
-    "Terapias recibidas": "No especificados",
-    "¿Ha participado en estudios clinicos o geneticos?": "No especificados",
-    "Necesidades y Desafíos": "Apoyo escolar"
-  },
-  {
-    "Nombre": "Eider",
-    "Localizacion": "Zaragoza",
-    "Edad": 8,
-    "Género": "Femenino",
-    "Pruebas realizadas": "Array genético, EEG",
-    "síntomas principales": "Retraso del lenguaje, hipotonía, dislalias, cerebelo pequeño",
-    "Nivel de afectación": "Leve",
-    "Medicamentos actuales/pasados": "Magnesio, probióticos, omegas vegetales",
-    "Terapias recibidas": "Logopedia, musicoterapia, estimulación motora, cambios dietéticos",
-    "¿Ha participado en estudios clinicos o geneticos?": "No especificados",
-    "Necesidades y Desafíos": "Mejora articulatoria, apoyo escolar"
-  },
-  {
-    "Nombre": "Carlos",
-    "Localizacion": "Madrid",
-    "Edad": 11,
-    "Género": "Masculino",
-    "Pruebas realizadas": "Array genético",
-    "síntomas principales": "Autismo grado 3, retraso mental moderado, epilepsia desde los 10 años, trastorno negativista desafiante, no habla",
-    "Nivel de afectación": "Grave",
-    "Medicamentos actuales/pasados": "Antiepilépticos",
-    "Terapias recibidas": "Educación especial, intervención conductual",
-    "¿Ha participado en estudios clinicos o geneticos?": "No especificados",
-    "Necesidades y Desafíos": "Control de crisis, comunicación alternativa, conducta"
-  }
-]
