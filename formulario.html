@@ -14,13 +14,14 @@
       <div class="brand">
         <img class="logo" src="https://raw.githubusercontent.com/Evelez23/-microdelecion/refs/heads/main/img/logo%20micro1.png" alt="Logo Microdeleción 15q11.2">
         <div>Microdeleción 15q11.2</div>
-    </div>
+      </div>
       <div class="nav-links">
         <a href="index.html">Inicio</a>
-        <a href="genetica.html">Genética</a> 
+        <a href="genetica.html">Genética</a>
         <a href="casos.html">Casos</a>
         <a href="estadisticas.html">Estadísticas</a>
         <a href="resumen.html">Resumen</a>
+        <a href="recursos.html">Recursos</a>
         <a class="btn-agregar" href="formulario.html">Reportar caso</a>
       </div>
     </div>
@@ -31,31 +32,81 @@
     <p class="subtitle">Comparte información sobre un caso de microdeleción 15q11.2 para ayudar a nuestra comunidad</p>
 
     <div class="panel">
-      <h2>Formulario de reporte</h2>
-      <p>Utiliza el siguiente formulario para reportar un nuevo caso. Toda la información se manejará con confidencialidad y respeto a la privacidad.</p>
+      <h2>Formulario de reporte completo</h2>
+      <p>Utiliza el siguiente formulario para reportar un nuevo caso. Toda la información se manejará con confidencialidad.</p>
       
-      <div class="form-container">
-        <iframe
-          src="https://docs.google.com/forms/d/e/1FAIpQLSflOhcRHnCXRPBr8TWlCI78yktvRBtssCQPufK_BqO3kj-29A/viewform?embedded=true"
-          frameborder="0"
-          marginheight="0"
-          marginwidth="0"
-          width="100%"
-          height="1200"
-          title="Formulario para reportar casos de microdeleción 15q11.2">
-          Cargando formulario…
-        </iframe>
-      </div>
+      <!-- Formulario integrado -->
+      <form id="caseForm" class="form-container">
+        <div class="form-group">
+          <label>Nombre (puede ser ficticio):*</label>
+          <input type="text" name="nombre" required>
+        </div>
+        
+        <div class="form-group">
+          <label>Edad:*</label>
+          <input type="number" name="edad" min="0" max="100" required>
+        </div>
+        
+        <div class="form-group">
+          <label>Género:*</label>
+          <select name="genero" required>
+            <option value="">Seleccionar</option>
+            <option value="Masculino">Masculino</option>
+            <option value="Femenino">Femenino</option>
+            <option value="Otro">Otro</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label>Ciudad/País:*</label>
+          <input type="text" name="localizacion" required placeholder="Ej: Madrid, España">
+        </div>
+        
+        <div class="form-group">
+          <label>Síntomas principales:*</label>
+          <textarea name="sintomas" required placeholder="Ej: TEA, retraso del lenguaje, hipotonía..."></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label>Nivel de afectación:*</label>
+          <select name="gravedad" required>
+            <option value="">Seleccionar</option>
+            <option value="Leve">Leve</option>
+            <option value="Moderado">Moderado</option>
+            <option value="Grave">Grave</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label>Terapias recibidas:</label>
+          <textarea name="terapias" placeholder="Ej: Logopedia, fisioterapia..."></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label>Medicamentos actuales:</label>
+          <textarea name="medicamentos" placeholder="Ej: Risperidona, magnesio..."></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label>¿Ha participado en estudios?</label>
+          <select name="estudios">
+            <option value="No">No</option>
+            <option value="Sí">Sí</option>
+          </select>
+        </div>
+        
+        <button type="submit" class="button">Enviar caso</button>
+      </form>
     </div>
 
     <div class="grid-2">
       <div class="panel">
         <h2>¿Por qué reportar un caso?</h2>
         <ul>
-          <li><strong>Ayuda a la comunidad:</strong> Tu experiencia puede ayudar a otras familias.</li>
-          <li><strong>Contribuye a la investigación:</strong> Los datos agregados ayudan a entender mejor esta condición.</li>
-          <li><strong>Recibe apoyo:</strong> Al compartir tu caso, puedes conectar con otras familias en situaciones similares.</li>
-          <li><strong>Mantén el anonimato:</strong> Toda la información personal se mantendrá confidencial.</li>
+          <li><strong>Ayuda a la comunidad:</strong> Tu experiencia puede ayudar a otras familias</li>
+          <li><strong>Contribuye a la investigación:</strong> Los datos agregados ayudan a entender mejor esta condición</li>
+          <li><strong>Recibe apoyo:</strong> Al compartir tu caso, puedes conectar con otras familias</li>
+          <li><strong>Mantén el anonimato:</strong> Toda la información personal se mantendrá confidencial</li>
         </ul>
       </div>
 
@@ -67,23 +118,45 @@
           <li>Pruebas diagnósticas realizadas</li>
           <li>Tratamientos y terapias</li>
           <li>Desafíos y necesidades</li>
-          <li>Información de contacto (opcional)</li>
         </ul>
       </div>
     </div>
 
     <div class="panel disclaimer">
       <h2>🔒 Política de privacidad</h2>
-      <p><strong>Tu privacidad es nuestra prioridad:</strong></p>
       <ul>
         <li>Nunca publicaremos información personal identificable</li>
         <li>Los datos se muestran de forma agregada y anónima</li>
         <li>Puedes solicitar eliminar tu información en cualquier momento</li>
-        <li>Utilizamos los datos solo con fines de investigación y apoyo comunitario</li>
+        <li>Utilizamos los datos solo con fines de investigación</li>
       </ul>
     </div>
   </section>
 
   <footer class="footer">© 2025 | Formulario seguro y confidencial - Comunidad de Familias 15q11.2</footer>
+
+  <script>
+    // Manejo del formulario
+    document.getElementById('caseForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const formData = new FormData(this);
+      const data = Object.fromEntries(formData);
+      data.__origen = 'no_validado';
+      data.fecha = new Date().toISOString();
+      
+      try {
+        // Guardar en localStorage temporalmente
+        const casos = JSON.parse(localStorage.getItem('casos_nuevos') || '[]');
+        casos.push(data);
+        localStorage.setItem('casos_nuevos', JSON.stringify(casos));
+        
+        alert('¡Caso registrado exitosamente! Los datos aparecerán en la sección de casos no validados.');
+        this.reset();
+      } catch (error) {
+        alert('Error al registrar el caso. Por favor intente nuevamente.');
+      }
+    });
+  </script>
 </body>
 </html>
