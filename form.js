@@ -37,8 +37,8 @@ function validateForm(formData) {
 async function submitForm(formData) {
   try {
     const { data, error } = await supabase
-      .from('casos')
-      .insert([formData])
+  .from('comments')  // ← USAR LA TABLA QUE SÍ EXISTE
+  .insert([formData])
       .select();
     
     if (error) {
