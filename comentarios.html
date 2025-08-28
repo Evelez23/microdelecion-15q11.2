@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Comentarios y Casos | Microdeleción 15q11.2</title>
+  <meta name="description" content="Comentarios y casos reportados por la comunidad">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <!-- Supabase JS -->
+  <script src="https://unpkg.com/@supabase/supabase-js"></script>
+  <script>
+    const supabaseUrl = 'https://bfzyrfsfptkyrnyogxuy.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJmenlyZnNmcHRreXJueW9neHV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYzNDI1MzIsImV4cCI6MjA3MTkxODUzMn0.VGe5dJRt6oJfUPKS8mvuy539CKyv7kTt6u8lRmBQi5A';
+    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+  </script>
+</head>
+<body>
+  <nav class="nav">
+    <div class="inner">
+      <div class="brand">
+        <img class="logo" src="https://raw.githubusercontent.com/Evelez23/-microdelecion/refs/heads/main/img/logo%20micro1.png" alt="Logo Microdeleción 15q11.2">
+        <div>Microdeleción 15q11.2</div>
+      </div>
+      <div class="nav-links">
+        <a href="index.html">Inicio</a>
+        <a href="genetica.html">Genética</a> 
+        <a href="casos.html">Casos</a>
+        <a href="estadisticas.html">Estadísticas</a>
+        <a href="resumen.html">Resumen</a>
+        <a href="recursos.html">Recursos</a>
+        <a href="comentarios.html" class="active">Comentarios</a>
+        <a class="btn-agregar" href="formulario.html">Reportar caso</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="container">
+    <h1>Comentarios de la Comunidad</h1>
+    <p class="subtitle">Casos y experiencias compartidas por familias afectadas por microdeleción 15q11.2</p>
+
+    <!-- Filtros y búsqueda -->
+    <div class="controls">
+      <input type="text" id="search-comments" placeholder="Buscar en comentarios..." aria-label="Buscar comentarios">
+      <select id="filter-gravedad">
+        <option value="">Todos los niveles</option>
+        <option value="Leve">Leve</option>
+        <option value="Moderado">Moderado</option>
+        <option value="Severo">Severo</option>
+      </select>
+      <button id="btn-refresh" class="button secondary">🔄 Actualizar</button>
+    </div>
+
+    <!-- Estadísticas -->
+    <div class="grid-4">
+      <div class="panel kpi">
+        <h2 id="total-comments">0</h2>
+        <p>Total comentarios</p>
+      </div>
+      <div class="panel kpi">
+        <h2 id="avg-age">0</h2>
+        <p>Edad promedio</p>
+      </div>
+      <div class="panel kpi">
+        <h2 id="countries-count">0</h2>
+        <p>Países</p>
+      </div>
+      <div class="panel kpi">
+        <h2 id="last-update">0</h2>
+        <p>Días actualizado</p>
+      </div>
+    </div>
+
+    <!-- Lista de comentarios -->
+    <div id="comments-container" class="listado-casos">
+      <div class="loading-comments">Cargando comentarios...</div>
+    </div>
+
+    <!-- Paginación -->
+    <div class="pagination">
+      <button id="btn-prev" class="button secondary" disabled>← Anterior</button>
+      <span id="page-info">Página 1 de 1</span>
+      <button id="btn-next" class="button secondary" disabled>Siguiente →</button>
+    </div>
+
+  </section>
+
+  <footer class="footer">© 2025 | Comunidad de Familias 15q11.2 - Todos los comentarios son de la comunidad</footer>
+
+  <style>
+    .loading-comments {
+      text-align: center;
+      padding: 40px;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    .comment-card {
+      background: var(--card);
+      border-radius: var(--border-radius);
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+      border-left: 4px solid var(--primary);
+    }
+
+    .comment-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .comment-meta {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .comment-badge {
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 0.8em;
+      font-weight: 600;
+    }
+
+    .badge-leve { background: rgba(99, 230, 190, 0.2); color: #63e6be; }
+    .badge-moderado { background: rgba(255, 212, 59, 0.2); color: #ffd43b; }
+    .badge-severo { background: rgba(255, 107, 107, 0.2); color: #ff6b6b; }
+
+    .comment-content {
+      margin-bottom: 15px;
+    }
+
+    .comment-field {
+      margin-bottom: 10px;
+    }
+
+    .comment-field strong {
+      color: var(--primary);
+      margin-right: 5px;
+    }
+
+    .comment-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9em;
+      color: var(--muted);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 10px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      margin: 30px 0;
+      flex-wrap: wrap;
+    }
+
+    #page-info {
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .no-comments {
+      text-align: center;
+      padding: 40px;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    .comment-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .comment-tag {
+      background: rgba(110, 168, 254, 0.1);
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 0.8em;
+      color: var(--primary);
+    }
+  </style>
+
+  <script>
+    let currentPage = 1;
+    const itemsPerPage = 10;
+    let allComments = [];
+    let filteredComments = [];
+
+    // Función para formatear fecha
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('es-ES', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
+
+    // Función para obtener badge de gravedad
+    function getGravedadBadge(gravedad) {
+      if (!gravedad) return '';
+      
+      const gravedadLower = gravedad.toLowerCase();
+      if (gravedadLower.includes('leve')) return 'badge-leve';
+      if (gravedadLower.includes('moderad')) return 'badge-moderado';
+      if (gravedadLower.includes('sever') || gravedadLower.includes('grave')) return 'badge-severo';
+      return 'badge-leve';
+    }
+
+    // Función para obtener icono de género
+    function getGenderIcon(genero, edad) {
+      if (!genero) return '👤';
+      
+      const edadNum = parseInt(edad) || 0;
+      const esNino = edadNum < 18;
+      
+      if (genero.toLowerCase().includes('masc') || genero.toLowerCase().includes('hombre')) {
+        return esNino ? '👦' : '👨';
+      }
+      if (genero.toLowerCase().includes('femen') || genero.toLowerCase().includes('mujer')) {
+        return esNino ? '👧' : '👩';
+      }
+      return esNino ? '🧒' : '👤';
+    }
+
+    // Cargar comentarios desde Supabase
+    async function loadComments() {
+      const container = document.getElementById('comments-container');
+      container.innerHTML = '<div class="loading-comments">Cargando comentarios...</div>';
+      
+      try {
+        const { data, error } = await supabase
+          .from('comments')
+          .select('*')
+          .order('fecha', { ascending: false });
+        
+        if (error) throw error;
+        
+        allComments = data || [];
+        filteredComments = [...allComments];
+        
+        updateStats();
+        renderComments();
+        setupFilters();
+        
+      } catch (error) {
+        console.error('Error cargando comentarios:', error);
+        container.innerHTML = `
+          <div class="no-comments">
+            <p>❌ Error al cargar los comentarios: ${error.message}</p>
+            <button onclick="loadComments()" class="button">Reintentar</button>
+          </div>
+        `;
+      }
+    }
+
+    // Actualizar estadísticas
+    function updateStats() {
+      // Total comentarios
+      document.getElementById('total-comments').textContent = allComments.length;
+      
+      // Edad promedio
+      const edadesValidas = allComments
+        .map(c => parseInt(c.edad))
+        .filter(edad => !isNaN(edad) && edad > 0);
+      
+      const edadPromedio = edadesValidas.length > 0 
+        ? Math.round(edadesValidas.reduce((a, b) => a + b, 0) / edadesValidas.length)
+        : 0;
+      document.getElementById('avg-age').textContent = edadPromedio;
+      
+      // Países únicos
+      const paises = new Set(
+        allComments
+          .map(c => c.localizacion)
+          .filter(l => l && l.trim() !== '')
+      );
+      document.getElementById('countries-count').textContent = paises.size;
+      
+      // Última actualización
+      if (allComments.length > 0) {
+        const ultimaFecha = new Date(allComments[0].fecha);
+        const hoy = new Date();
+        const diasDiff = Math.floor((hoy - ultimaFecha) / (1000 * 60 * 60 * 24));
+        document.getElementById('last-update').textContent = diasDiff;
+      }
+    }
+
+    // Renderizar comentarios
+    function renderComments() {
+      const container = document.getElementById('comments-container');
+      
+      if (filteredComments.length === 0) {
+        container.innerHTML = '<div class="no-comments">No se encontraron comentarios que coincidan con los filtros.</div>';
+        return;
+      }
+      
+      // Paginación
+      const startIndex = (currentPage - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+      const paginatedComments = filteredComments.slice(startIndex, endIndex);
+      
+      const totalPages = Math.ceil(filteredComments.length / itemsPerPage);
+      document.getElementById('page-info').textContent = `Página ${currentPage} de ${totalPages}`;
+      document.getElementById('btn-prev').disabled = currentPage <= 1;
+      document.getElementById('btn-next').disabled = currentPage >= totalPages;
+      
+      // Renderizar comentarios
+      container.innerHTML = paginatedComments.map(comment => `
+        <div class="comment-card">
+          <div class="comment-header">
+            <div class="comment-meta">
+              <span style="font-size: 1.5em">${getGenderIcon(comment.genero, comment.edad)}</span>
+              <h3>${comment.nombre || 'Anónimo'}</h3>
+              ${comment.edad ? `<span>${comment.edad} años</span>` : ''}
+              ${comment.genero ? `<span>• ${comment.genero}</span>` : ''}
+              ${comment.localizacion ? `<span>• ${comment.localizacion}</span>` : ''}
+            </div>
+            ${comment.gravedad ? `
+              <span class="comment-badge ${getGravedadBadge(comment.gravedad)}">
+                ${comment.gravedad}
+              </span>
+            ` : ''}
+          </div>
+          
+          <div class="comment-content">
+            ${comment.sintomas ? `
+              <div class="comment-field">
+                <strong>Síntomas:</strong> ${comment.sintomas}
+              </div>
+            ` : ''}
+            
+            ${comment.pruebas ? `
+              <div class="comment-field">
+                <strong>Pruebas:</strong> ${comment.pruebas}
+              </div>
+            ` : ''}
+            
+            ${comment.medicamentos ? `
+              <div class="comment-field">
+                <strong>Medicamentos:</strong> ${comment.medicamentos}
+              </div>
+            ` : ''}
+            
+            ${comment.terapias ? `
+              <div class="comment-field">
+                <strong>Terapias:</strong> ${comment.terapias}
+              </div>
+            ` : ''}
+            
+            ${comment.desafios ? `
+              <div class="comment-field">
+                <strong>Desafíos:</strong> ${comment.desafios}
+              </div>
+            ` : ''}
+            
+            ${comment.comentarios ? `
+              <div class="comment-field">
+                <strong>Comentarios:</strong> ${comment.comentarios}
+              </div>
+            ` : ''}
+          </div>
+          
+          <div class="comment-footer">
+            <span>Reportado el ${formatDate(comment.fecha)}</span>
+            <div class="comment-tags">
+              ${comment.sintomas && comment.sintomas.includes('TEA') ? '<span class="comment-tag">TEA</span>' : ''}
+              ${comment.sintomas && comment.sintomas.includes('TDAH') ? '<span class="comment-tag">TDAH</span>' : ''}
+              ${comment.sintomas && comment.sintomas.includes('epilepsia') ? '<span class="comment-tag">Epilepsia</span>' : ''}
+              ${comment.sintomas && comment.sintomas.includes('hipotonía') ? '<span class="comment-tag">Hipotonía</span>' : ''}
+            </div>
+          </div>
+        </div>
+      `).join('');
+      
+      // Animaciones
+      if (window.anime) {
+        anime({
+          targets: '.comment-card',
+          opacity: [0, 1],
+          translateY: [20, 0],
+          delay: anime.stagger(100),
+          duration: 600,
+          easing: 'easeOutQuad'
+        });
+      }
+    }
+
+    // Configurar filtros
+    function setupFilters() {
+      const searchInput = document.getElementById('search-comments');
+      const filterGravedad = document.getElementById('filter-gravedad');
+      const refreshBtn = document.getElementById('btn-refresh');
+      const prevBtn = document.getElementById('btn-prev');
+      const nextBtn = document.getElementById('btn-next');
+      
+      // Búsqueda
+      searchInput.addEventListener('input', applyFilters);
+      
+      // Filtro de gravedad
+      filterGravedad.addEventListener('change', applyFilters);
+      
+      // Botones de paginación
+      prevBtn.addEventListener('click', () => {
+        if (currentPage > 1) {
+          currentPage--;
+          renderComments();
+        }
+      });
+      
+      nextBtn.addEventListener('click', () => {
+        const totalPages = Math.ceil(filteredComments.length / itemsPerPage);
+        if (currentPage < totalPages) {
+          currentPage++;
+          renderComments();
+        }
+      });
+      
+      // Botón de actualizar
+      refreshBtn.addEventListener('click', () => {
+        currentPage = 1;
+        loadComments();
+      });
+    }
+
+    // Aplicar filtros
+    function applyFilters() {
+      const searchTerm = document.getElementById('search-comments').value.toLowerCase();
+      const gravedadFilter = document.getElementById('filter-gravedad').value;
+      
+      filteredComments = allComments.filter(comment => {
+        // Filtro de búsqueda
+        const matchesSearch = !searchTerm || 
+          (comment.nombre && comment.nombre.toLowerCase().includes(searchTerm)) ||
+          (comment.localizacion && comment.localizacion.toLowerCase().includes(searchTerm)) ||
+          (comment.sintomas && comment.sintomas.toLowerCase().includes(searchTerm)) ||
+          (comment.comentarios && comment.comentarios.toLowerCase().includes(searchTerm));
+        
+        // Filtro de gravedad
+        const matchesGravedad = !gravedadFilter || 
+          (comment.gravedad && comment.gravedad.toLowerCase().includes(gravedadFilter.toLowerCase()));
+        
+        return matchesSearch && matchesGravedad;
+      });
+      
+      currentPage = 1;
+      renderComments();
+    }
+
+    // Inicializar
+    document.addEventListener('DOMContentLoaded', loadComments);
+  </script>
+</body>
+</html>
