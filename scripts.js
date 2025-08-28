@@ -139,4 +139,25 @@ function setActiveNav() {
 // ======================
 document.addEventListener('DOMContentLoaded', setActiveNav);
 
+// Función para optimizar imágenes
+function optimizarImagenes() {
+  document.querySelectorAll('img').forEach(img => {
+    // Lazy loading nativo
+    img.loading = 'lazy';
+    
+    // Agregar transición suave
+    img.style.transition = 'opacity 0.3s ease';
+    img.onload = function() {
+      this.style.opacity = '1';
+    };
+    img.style.opacity = '0';
+  });
+}
+
+// Inicializar cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', function() {
+  setActiveNav();
+  optimizarImagenes();
+});
+
 
