@@ -573,15 +573,12 @@
             </div>
 
             <!-- NUEVA SECCIÓN: SUGERENCIAS DE LA COMUNIDAD -->
-           <div class="comments-section">
-  <h3>💬 Comentarios de la Comunidad</h3>
-  <div id="comments-container"></div>
-  <form id="comment-form">
-    <input type="text" id="commenter-name" placeholder="Tu nombre (opcional)">
-    <textarea id="comment-text" required placeholder="Comparte tu experiencia..."></textarea>
-    <button type="submit" class="btn-submit">Publicar</button>
-  </form>
-</div>
+            <div class="suggestions-container">
+                <h3>💬 Sugerencias de la comunidad</h3>
+                <button class="toggle-suggestions" onclick="toggleSuggestions()">
+                    <span id="toggle-icon">▼</span>
+                    <span id="toggle-text">Ver sugerencias</span>
+                </button>
                 
                 <div id="suggestions-list" style="display: none;">
                     <ul class="suggestions-list" id="suggestions-container">
