@@ -739,21 +739,9 @@ legend {
   box-shadow: 0 0 0 2px rgba(110, 168, 254, 0.2);
 }
 
-.form-group input:invalid:not(:focus):not(:placeholder-shown) {
-  border-color: #ff6b6b;
-}
-
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
   .form-grid {
     grid-template-columns: 1fr;
-  }
-  
-  .form-container {
-    padding: 16px;
-  }
-  
-  fieldset {
-    padding: 15px;
   }
 }
