@@ -6,22 +6,49 @@
   <title>Reportar caso | Microdeleción 15q11.2</title>
   <meta name="description" content="Formulario para reportar nuevos casos de microdeleción 15q11.2">
   <link rel="stylesheet" href="styles.css">
-  <script defer src="scripts.js"></script>
+  <style>
+    .form-status {
+      padding: 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+      display: none;
+    }
+    .form-status.success {
+      background: rgba(99, 230, 190, 0.2);
+      border: 1px solid #63e6be;
+      color: #63e6be;
+    }
+    .form-status.error {
+      background: rgba(255, 107, 107, 0.2);
+      border: 1px solid #ff6b6b;
+      color: #ff6b6b;
+    }
+    .required::after {
+      content: " *";
+      color: #ff6b6b;
+    }
+    .form-help {
+      font-size: 0.9em;
+      color: var(--muted);
+      margin-top: 5px;
+    }
+  </style>
 </head>
 <body>
   <nav class="nav">
     <div class="inner">
       <div class="brand">
-        <img class="logo" src="https://raw.githubusercontent.com/Evelez23/-microdelecion/refs/heads/main/img/logo%20micro1.png" alt="Logo Microdeleción 15q11.2">
+        <img class="logo" src="https://raw.githubusercontent.com/Evelez23/microdelecion-15q11.2/main/img/logo%20micro1.webp" alt="Logo Microdeleción 15q11.2">
         <div>Microdeleción 15q11.2</div>
       </div>
       <div class="nav-links">
         <a href="index.html">Inicio</a>
-        <a href="genetica.html">Genética</a>
+        <a href="genetica.html">Genética</a> 
         <a href="casos.html">Casos</a>
         <a href="estadisticas.html">Estadísticas</a>
         <a href="resumen.html">Resumen</a>
         <a href="recursos.html">Recursos</a>
+        <a href="comentarios.html">Comentarios</a>
         <a class="btn-agregar" href="formulario.html">Reportar caso</a>
       </div>
     </div>
@@ -32,130 +59,244 @@
     <p class="subtitle">Comparte información sobre un caso de microdeleción 15q11.2 para ayudar a nuestra comunidad</p>
 
     <div class="panel">
-      <h2>Formulario de reporte completo</h2>
-      <p>Utiliza el siguiente formulario para reportar un nuevo caso. Toda la información se manejará con confidencialidad.</p>
+      <h2>📋 Formulario de reporte</h2>
+      <p>Utiliza el siguiente formulario para reportar un nuevo caso. Los campos marcados con <span class="required"></span> son obligatorios.</p>
       
-      <!-- Formulario integrado -->
-      <form id="caseForm" class="form-container">
+      <div id="form-status" class="form-status"></div>
+      
+      <form id="casoForm" class="form-container">
+        <!-- Información básica -->
+        <fieldset>
+          <legend>👤 Información básica</legend>
+          
+          <div class="form-group">
+            <label for="nombre" class="required">Nombre o seudónimo:</label>
+            <input type="text" id="nombre" name="nombre" placeholder="Cómo te gustaría que te llamemos" required>
+            <div class="form-help">Tu privacidad es importante. Usa un nombre que te identifique.</div>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="edad" class="required">Edad:</label>
+              <input type="number" id="edad" name="edad" min="0" max="120" placeholder="Edad en años" required>
+            </div>
+
+            <div class="form-group">
+              <label for="genero" class="required">Género:</label>
+              <select id="genero" name="genero" required>
+                <option value="">Seleccionar...</option>
+                <option value="Masculino">Masculino</option>
+                <option value="Femenino">Femenino</option>
+                <option value="No binario">No binario</option>
+                <option value="Prefiero no decir">Prefiero no decir</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="localizacion">📍 Ubicación (país/ciudad):</label>
+            <input type="text" id="localizacion" name="localizacion" placeholder="Ej: Madrid, España">
+            <div class="form-help">Nos ayuda a entender la distribución geográfica.</div>
+          </div>
+        </fieldset>
+
+        <!-- Información médica -->
+        <fieldset>
+          <legend>🏥 Información médica</legend>
+          
+          <div class="form-group">
+            <label for="sintomas" class="required">📊 Síntomas principales:</label>
+            <textarea id="sintomas" name="sintomas" rows="3" placeholder="Ej: TEA, hipotonía, retraso en el lenguaje, epilepsia, TDAH..." required></textarea>
+            <div class="form-help">Separa los síntomas con comas. Sé tan específico como puedas.</div>
+          </div>
+
+          <div class="form-group">
+            <label for="gravedad" class="required">⚖️ Nivel de afectación:</label>
+            <select id="gravedad" name="gravedad" required>
+              <option value="">Seleccionar...</option>
+              <option value="Leve">Leve (vida independiente con apoyos mínimos)</option>
+              <option value="Moderado">Moderado (necesita apoyo significativo)</option>
+              <option value="Severo">Severo (dependencia total o casi total)</option>
+              <option value="No especificado">No estoy seguro/a</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="pruebas">🔍 Pruebas realizadas:</label>
+            <textarea id="pruebas" name="pruebas" rows="2" placeholder="Ej: Array genético, EEG, resonancia magnética, cariotipo..."></textarea>
+          </div>
+        </fieldset>
+
+        <!-- Tratamientos y terapias -->
+        <fieldset>
+          <legend>💊 Tratamientos y terapias</legend>
+          
+          <div class="form-group">
+            <label for="medicamentos">💊 Medicamentos:</label>
+            <textarea id="medicamentos" name="medicamentos" rows="2" placeholder="Ej: Risperidona, magnesio, antiepilépticos, metilfenidato..."></textarea>
+            <div class="form-help">Incluye dosis si las conoces.</div>
+          </div>
+
+          <div class="form-group">
+            <label for="terapias">🏋️ Terapias recibidas:</label>
+            <textarea id="terapias" name="terapias" rows="2" placeholder="Ej: Logopedia, fisioterapia, psicoterapia, integración sensorial..."></textarea>
+            <div class="form-help">Frecuencia y duración de las terapias.</div>
+          </div>
+        </fieldset>
+
+        <!-- Información adicional -->
+        <fieldset>
+          <legend>💭 Información adicional</legend>
+          
+          <div class="form-group">
+            <label for="desafios">🔄 Desafíos principales:</label>
+            <textarea id="desafios" name="desafios" rows="3" placeholder="¿Qué desafíos enfrentas día a día? Ej: comunicación, movilidad, alimentación, sueño..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="comentarios">💡 Comentarios adicionales:</label>
+            <textarea id="comentarios" name="comentarios" rows="3" placeholder="Algo más que quieras compartir con la comunidad..."></textarea>
+            <div class="form-help">Logros, consejos, cosas que te han funcionado...</div>
+          </div>
+        </fieldset>
+
+        <!-- Consentimiento -->
         <div class="form-group">
-          <label>Nombre (puede ser ficticio):*</label>
-          <input type="text" name="nombre" required>
+          <label>
+            <input type="checkbox" id="privacidad" required>
+            ✅ Acepto que esta información se comparta de forma <strong>anónima</strong> con la comunidad para fines de apoyo e investigación
+          </label>
         </div>
-        
-        <div class="form-group">
-          <label>Edad:*</label>
-          <input type="number" name="edad" min="0" max="100" required>
-        </div>
-        
-        <div class="form-group">
-          <label>Género:*</label>
-          <select name="genero" required>
-            <option value="">Seleccionar</option>
-            <option value="Masculino">Masculino</option>
-            <option value="Femenino">Femenino</option>
-            <option value="Otro">Otro</option>
-          </select>
-        </div>
-        
-        <div class="form-group">
-          <label>Ciudad/País:*</label>
-          <input type="text" name="localizacion" required placeholder="Ej: Madrid, España">
-        </div>
-        
-        <div class="form-group">
-          <label>Síntomas principales:*</label>
-          <textarea name="sintomas" required placeholder="Ej: TEA, retraso del lenguaje, hipotonía..."></textarea>
-        </div>
-        
-        <div class="form-group">
-          <label>Nivel de afectación:*</label>
-          <select name="gravedad" required>
-            <option value="">Seleccionar</option>
-            <option value="Leve">Leve</option>
-            <option value="Moderado">Moderado</option>
-            <option value="Grave">Grave</option>
-          </select>
-        </div>
-        
-        <div class="form-group">
-          <label>Terapias recibidas:</label>
-          <textarea name="terapias" placeholder="Ej: Logopedia, fisioterapia..."></textarea>
-        </div>
-        
-        <div class="form-group">
-          <label>Medicamentos actuales:</label>
-          <textarea name="medicamentos" placeholder="Ej: Risperidona, magnesio..."></textarea>
-        </div>
-        
-        <div class="form-group">
-          <label>¿Ha participado en estudios?</label>
-          <select name="estudios">
-            <option value="No">No</option>
-            <option value="Sí">Sí</option>
-          </select>
-        </div>
-        
-        <button type="submit" class="button">Enviar caso</button>
+
+        <button type="submit" class="button">📤 Enviar reporte</button>
       </form>
     </div>
 
     <div class="grid-2">
       <div class="panel">
-        <h2>¿Por qué reportar un caso?</h2>
+        <h2>🤝 ¿Por qué reportar un caso?</h2>
         <ul>
-          <li><strong>Ayuda a la comunidad:</strong> Tu experiencia puede ayudar a otras familias</li>
-          <li><strong>Contribuye a la investigación:</strong> Los datos agregados ayudan a entender mejor esta condición</li>
-          <li><strong>Recibe apoyo:</strong> Al compartir tu caso, puedes conectar con otras familias</li>
-          <li><strong>Mantén el anonimato:</strong> Toda la información personal se mantendrá confidencial</li>
+          <li><strong>Ayuda a la comunidad:</strong> Tu experiencia puede ayudar a otras familias.</li>
+          <li><strong>Contribuye a la investigación:</strong> Los datos agregados ayudan a entender mejor esta condición.</li>
+          <li><strong>Recibe apoyo:</strong> Al compartir tu caso, puedes conectar con otras familias en situaciones similares.</li>
+          <li><strong>Mantén el anonimato:</strong> Toda la información personal se mantendrá confidencial.</li>
         </ul>
       </div>
 
       <div class="panel">
-        <h2>Datos que solicitamos</h2>
+        <h2>🔒 Política de privacidad</h2>
+        <p><strong>Tu privacidad es nuestra prioridad:</strong></p>
         <ul>
-          <li>Información demográfica básica (edad, género, ubicación)</li>
-          <li>Síntomas y características principales</li>
-          <li>Pruebas diagnósticas realizadas</li>
-          <li>Tratamientos y terapias</li>
-          <li>Desafíos y necesidades</li>
+          <li>✅ Nunca publicaremos información personal identificable</li>
+          <li>✅ Los datos se muestran de forma agregada y anónima</li>
+          <li>✅ Puedes solicitar eliminar tu información en cualquier momento</li>
+          <li>✅ Utilizamos los datos solo con fines de investigación y apoyo comunitario</li>
         </ul>
       </div>
-    </div>
-
-    <div class="panel disclaimer">
-      <h2>🔒 Política de privacidad</h2>
-      <ul>
-        <li>Nunca publicaremos información personal identificable</li>
-        <li>Los datos se muestran de forma agregada y anónima</li>
-        <li>Puedes solicitar eliminar tu información en cualquier momento</li>
-        <li>Utilizamos los datos solo con fines de investigación</li>
-      </ul>
     </div>
   </section>
 
   <footer class="footer">© 2025 | Formulario seguro y confidencial - Comunidad de Familias 15q11.2</footer>
 
+  <!-- Supabase CDN -->
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
   <script>
-    // Manejo del formulario
-    document.getElementById('caseForm').addEventListener('submit', async function(e) {
+    // Inicializar Supabase
+    const SUPABASE_URL = 'https://bfzyrfsfptkyrnyogxuy.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJmenlyZnNmcHRreXJueW9neHV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYzNDI1MzIsImV4cCI6MjA3MTkxODUzMn0.VGe5dJRt6oJfUPKS8mvuy539CKyv7kTt6u8lRmBQi5A';
+    
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // Mostrar mensaje de estado
+    function showMessage(message, type) {
+      const statusDiv = document.getElementById('form-status');
+      statusDiv.textContent = message;
+      statusDiv.className = `form-status ${type}`;
+      statusDiv.style.display = 'block';
+      
+      // Scroll to message
+      statusDiv.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Manejar envío del formulario
+    document.getElementById('casoForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       
-      const formData = new FormData(this);
-      const data = Object.fromEntries(formData);
-      data.__origen = 'no_validado';
-      data.fecha = new Date().toISOString();
+      const submitButton = this.querySelector('button[type="submit"]');
+      const originalText = submitButton.textContent;
+      
+      // Validar checkbox de privacidad
+      if (!document.getElementById('privacidad').checked) {
+        showMessage('Debes aceptar la política de privacidad para enviar el formulario', 'error');
+        return;
+      }
+      
+      // Obtener datos del formulario
+      const formData = {
+        nombre: document.getElementById('nombre').value.trim(),
+        edad: parseInt(document.getElementById('edad').value) || 0,
+        genero: document.getElementById('genero').value,
+        localizacion: document.getElementById('localizacion').value.trim(),
+        sintomas: document.getElementById('sintomas').value.trim(),
+        gravedad: document.getElementById('gravedad').value,
+        pruebas: document.getElementById('pruebas').value.trim(),
+        medicamentos: document.getElementById('medicamentos').value.trim(),
+        terapias: document.getElementById('terapias').value.trim(),
+        desafios: document.getElementById('desafios').value.trim(),
+        comentarios: document.getElementById('comentarios').value.trim()
+      };
+      
+      // Validar datos requeridos
+      if (!formData.nombre || !formData.edad || !formData.genero || !formData.sintomas || !formData.gravedad) {
+        showMessage('Por favor, completa todos los campos obligatorios', 'error');
+        return;
+      }
+      
+      // Deshabilitar botón y mostrar carga
+      submitButton.disabled = true;
+      submitButton.textContent = 'Enviando...';
       
       try {
-        // Guardar en localStorage temporalmente
-        const casos = JSON.parse(localStorage.getItem('casos_nuevos') || '[]');
-        casos.push(data);
-        localStorage.setItem('casos_nuevos', JSON.stringify(casos));
+        // Insertar en Supabase
+        const { data, error } = await supabase
+          .from('casos')
+          .insert([formData])
+          .select();
         
-        alert('¡Caso registrado exitosamente! Los datos aparecerán en la sección de casos no validados.');
+        if (error) {
+          throw new Error(error.message);
+        }
+        
+        // Éxito
+        showMessage('✅ ¡Reporte enviado con éxito! Gracias por contribuir a nuestra comunidad. Tu información ayuda a otras familias.', 'success');
+        
+        // Limpiar formulario
         this.reset();
+        
+        // Redirigir después de 3 segundos
+        setTimeout(() => {
+          window.location.href = 'comentarios.html';
+        }, 3000);
+        
       } catch (error) {
-        alert('Error al registrar el caso. Por favor intente nuevamente.');
+        console.error('Error:', error);
+        showMessage('❌ Error al enviar el reporte: ' + error.message, 'error');
+      } finally {
+        // Restaurar botón
+        submitButton.disabled = false;
+        submitButton.textContent = originalText;
       }
+    });
+
+    // Validación en tiempo real
+    document.querySelectorAll('input[required], select[required], textarea[required]').forEach(input => {
+      input.addEventListener('blur', function() {
+        if (!this.value.trim()) {
+          this.style.borderColor = '#ff6b6b';
+        } else {
+          this.style.borderColor = '';
+        }
+      });
     });
   </script>
 </body>
