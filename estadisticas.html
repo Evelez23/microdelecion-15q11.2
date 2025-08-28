@@ -781,27 +781,15 @@
         }
 
         // 6. PAÍSES - CORREGIDO
-       <!-- Reemplazar la sección de países con: -->
-<div class="panel">
-  <h2>Distribución geográfica</h2>
-  <div id="paises-container" class="paises-grid">
-    <div class="pais-card">
-      <span class="bandera">🇪🇸</span>
-      <div class="pais-nombre">España</div>
-      <div class="pais-casos">48 casos</div>
-    </div>
-    <div class="pais-card">
-      <span class="bandera">🇭🇳</span>
-      <div class="pais-nombre">Honduras</div>
-      <div class="pais-casos">1 caso</div>
-    </div>
-    <div class="pais-card">
-      <span class="bandera">🇦🇷</span>
-      <div class="pais-nombre">Argentina</div>
-      <div class="pais-casos">1 caso</div>
-    </div>
-  </div>
-</div>
+        const paisesContainer = document.getElementById('paises-container');
+        if (paisesContainer) {
+          const paisesCount = {};
+          data.forEach(r => {
+            const lugar = (r[campoLocalizacion] || '').trim();
+            if (lugar && !lugar.toLowerCase().includes('no especific')) {
+              const pais = detectarPais(lugar);
+              paisesCount[pais] = (paisesCount[pais] || 0) + 1;
+            }
           });
 
           const paisesOrdenados = Object.entries(paisesCount).sort((a, b) => b[1] - a[1]).slice(0, 12);
