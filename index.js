@@ -1,4 +1,31 @@
-// index.js - Versión completa con mapa de países
+<script>
+// Versión mejorada del código JavaScript
+async function loadDataset() {
+  // Esta función debería cargar tus datos reales
+  try {
+    const response = await fetch('ruta/a/tus/datos.json'); // Cambia por tu ruta real
+    return await response.json();
+  } catch (error) {
+    console.error('Error cargando datos, usando datos de ejemplo:', error);
+    // Datos de ejemplo para prueba
+    return [
+      { __origen: "validado", localizacion: "Madrid, España", edad: "5" },
+      { __origen: "validado", localizacion: "Barcelona, España", edad: "8" },
+      { __origen: "no_validado", localizacion: "Buenos Aires, Argentina", edad: "12" },
+      { __origen: "validado", localizacion: "Ciudad de México, México", edad: "3" },
+      { __origen: "validado", localizacion: "No especificada", edad: "15" },
+      { __origen: "no_validado", localizacion: "Lima, Perú", edad: "7" },
+      { __origen: "validado", localizacion: "Santiago, Chile", edad: "19" },
+      { __origen: "validado", localizacion: "New York, USA", edad: "22" },
+      { __origen: "validado", localizacion: "París, Francia", edad: "6" },
+      { __origen: "validado", localizacion: "Roma, Italia", edad: "10" },
+      { __origen: "no_validado", localizacion: "Berlín, Alemania", edad: "14" },
+      { __origen: "validado", localizacion: "Tokio, Japón", edad: "9" },
+      { __origen: "validado", localizacion: "No especificada", edad: "" }
+    ];
+  }
+}
+
 async function initIndex() {
   const data = await loadDataset();
 
@@ -8,11 +35,17 @@ async function initIndex() {
   const noValidados = data.filter(c => c.__origen === "no_validado").length;
 
   // Países / localización distintos (excluyendo "No especificada")
-  const paisesSet = new Set(
-    data
-      .map(c => (c.localizacion || "").trim())
-      .filter(p => p && p.toLowerCase() !== "no especificada")
-  );
+  const paisesUnicos = new Set();
+  
+  data.forEach(c => {
+    const lugar = (c.localizacion || "").trim();
+    if (lugar && lugar.toLowerCase() !== "no especificada") {
+      const pais = detectarPais(lugar);
+      if (pais && pais !== "Desconocido") {
+        paisesUnicos.add(pais);
+      }
+    }
+  });
 
   // Render de KPIs
   const kpiContainer = document.getElementById("kpis");
@@ -31,7 +64,7 @@ async function initIndex() {
         <p>Casos no validados</p>
       </div>
       <div class="panel kpi">
-        <h2>${paisesSet.size}</h2>
+        <h2>${paisesUnicos.size}</h2>
         <p>Países con casos</p>
       </div>
     `;
@@ -69,7 +102,7 @@ async function initIndex() {
         datasets: [{
           label: "Número de casos",
           data: Object.values(buckets),
-          backgroundColor: "#4e79a7"
+          backgroundColor: "#6ea8fe"
         }]
       },
       options: {
@@ -89,7 +122,9 @@ async function initIndex() {
       const lugar = (c.localizacion || "").trim();
       if (lugar && lugar.toLowerCase() !== "no especificada") {
         const pais = detectarPais(lugar);
-        paisesCount[pais] = (paisesCount[pais] || 0) + 1;
+        if (pais && pais !== "Desconocido") {
+          paisesCount[pais] = (paisesCount[pais] || 0) + 1;
+        }
       }
     });
 
@@ -101,7 +136,7 @@ async function initIndex() {
     if (paisesOrdenados.length > 0) {
       paisesContainer.innerHTML = paisesOrdenados.map(([pais, count]) => {
         const bandera = getBandera(pais);
-        const nombrePais = pais.charAt(0).toUpperCase() + pais.slice(1);
+        const nombrePais = formatearNombrePais(pais);
         
         return `
           <div class="pais-card">
@@ -129,92 +164,124 @@ async function initIndex() {
   }
 }
 
+// Función para formatear el nombre del país
+function formatearNombrePais(pais) {
+  const formatoEspecial = {
+    'usa': 'EE.UU.',
+    'estados unidos': 'EE.UU.',
+    'reino unido': 'Reino Unido',
+    'espana': 'España',
+    'mexico': 'México',
+    'peru': 'Perú',
+    'japon': 'Japón'
+  };
+  
+  return formatoEspecial[pais.toLowerCase()] || 
+         pais.charAt(0).toUpperCase() + pais.slice(1);
+}
+
 // Función para obtener bandera por país
 function getBandera(pais) {
-  // Limpiar y normalizar el texto del país
-  const paisLimpio = pais.toLowerCase()
-    .replace(/[^a-záéíóúüñ\s]/g, '') // Eliminar caracteres especiales
-    .trim();
+  const paisNormalizado = pais.toLowerCase().trim();
   
   const banderas = {
     // España y variantes
     'españa': '🇪🇸', 'espana': '🇪🇸', 'spain': '🇪🇸',
-    'andalucía': '🇪🇸', 'andalucia': '🇪🇸', 'malaga': '🇪🇸',
-    'madrid': '🇪🇸', 'barcelona': '🇪🇸', 'valencia': '🇪🇸',
-    'sevilla': '🇪🇸', 'bilbao': '🇪🇸', 'granada': '🇪🇸','Segovia': '🇪🇸','Alicante': '🇪🇸','Zaragoza': '🇪🇸','Murcia': '🇪🇸',
     
     // Latinoamérica
-    'argentina': '🇦🇷', 'buenos aires': '🇦🇷', 'córdoba': '🇦🇷',
-    'honduras': '🇭🇳', 'tegucigalpa': '🇭🇳',
-    'méxico': '🇲🇽', 'mexico': '🇲🇽', 'cdmx': '🇲🇽',
-    'colombia': '🇨🇴', 'bogota': '🇨🇴', 'medellin': '🇨🇴',
-    'chile': '🇨🇱', 'santiago': '🇨🇱',
-    'perú': '🇵🇪', 'peru': '🇵🇪', 'lima': '🇵🇪',
-    'venezuela': '🇻🇪', 'caracas': '🇻🇪',
-    'ecuador': '🇪🇨', 'quito': '🇪🇨',
-    'uruguay': '🇺🇾', 'montevideo': '🇺🇾',
+    'argentina': '🇦🇷',
+    'honduras': '🇭🇳',
+    'méxico': '🇲🇽', 'mexico': '🇲🇽',
+    'colombia': '🇨🇴',
+    'chile': '🇨🇱',
+    'perú': '🇵🇪', 'peru': '🇵🇪',
+    'venezuela': '🇻🇪',
+    'ecuador': '🇪🇨',
+    'uruguay': '🇺🇾',
+    'brasil': '🇧🇷',
     
     // Resto del mundo
     'estados unidos': '🇺🇸', 'usa': '🇺🇸', 'eeuu': '🇺🇸',
     'canadá': '🇨🇦', 'canada': '🇨🇦',
-    'francia': '🇫🇷', 'paris': '🇫🇷',
-    'italia': '🇮🇹', 'roma': '🇮🇹',
+    'francia': '🇫🇷',
+    'italia': '🇮🇹',
+    'alemania': '🇩🇪',
+    'reino unido': '🇬🇧', 'inglaterra': '🇬🇧',
+    'japón': '🇯🇵', 'japon': '🇯🇵',
     
     'default': '🌍'
   };
 
-  // Buscar coincidencias parciales
-  for (const [key, bandera] of Object.entries(banderas)) {
-    if (paisLimpio.includes(key) || key.includes(paisLimpio)) {
-      return bandera;
-    }
-  }
-  
-  return banderas.default;
+  return banderas[paisNormalizado] || banderas.default;
 }
 
-// Función para detectar el país desde una ciudad/región
+// Función mejorada para detectar el país desde una ciudad/región
 function detectarPais(lugar) {
-  if (!lugar) return 'Desconocido';
+  if (!lugar || lugar.toLowerCase() === "no especificada") return 'Desconocido';
   
   const lugarLower = lugar.toLowerCase();
   
-  const paises = {
-    'españa': ['malaga', 'málaga', 'madrid', 'barcelona', 'valencia', 'sevilla', 'bilbao', 'granada', 'Alicante', 'Murcia', 'Zaragoza', 'Segovia',],
-    'argentina': ['buenos aires', 'córdoba', 'rosario', 'mendoza', 'caba'],
-    'honduras': ['tegucigalpa', 'san pedro sula', 'la ceiba'],
-    'méxico': ['ciudad de méxico', 'cdmx', 'guadalajara', 'monterrey', 'cancún'],
-    'colombia': ['bogotá', 'bogota', 'medellín', 'medellin', 'cali', 'barranquilla'],
-    'chile': ['santiago', 'valparaíso', 'viña del mar'],
-    'perú': ['lima', 'callao', 'cusco'],
-    'venezuela': ['caracas', 'maracaibo', 'valencia'],
-    'estados unidos': ['new york', 'los angeles', 'chicago', 'miami', 'texas'],
-    'francia': ['parís', 'paris', 'lyon', 'marsella'],
-    'italia': ['roma', 'milán', 'milan', 'venecia']
-  };
+  // Lista de países a detectar (prioridad a coincidencias exactas)
+  const paises = [
+    'españa', 'espana', 'spain', 'argentina', 'honduras', 
+    'méxico', 'mexico', 'colombia', 'chile', 'perú', 'peru',
+    'venezuela', 'ecuador', 'uruguay', 'brasil', 'estados unidos',
+    'usa', 'eeuu', 'canadá', 'canada', 'francia', 'italia', 
+    'alemania', 'reino unido', 'inglaterra', 'japón', 'japon'
+  ];
   
-  // Buscar si el lugar contiene una ciudad de algún país
-  for (const [pais, ciudades] of Object.entries(paises)) {
-    if (ciudades.some(ciudad => lugarLower.includes(ciudad))) {
+  // Primero buscar el nombre completo del país
+  for (const pais of paises) {
+    if (lugarLower.includes(pais)) {
       return pais;
     }
   }
   
-  // Si no encontramos ciudad, devolver el texto original
-  return lugar;
-}
-
-// Función para acortar nombres largos
-function acortarNombre(pais) {
-  const acortamientos = {
-    'estados unidos': 'EE.UU.',
-    'reino unido': 'R.U.',
-    'república dominicana': 'R.D.',
-    'default': pais.length > 15 ? pais.substring(0, 12) + '...' : pais
+  // Si no encontramos país directamente, buscar por ciudades/regiones
+  const mappingCiudades = {
+    // España
+    'madrid': 'españa', 'barcelona': 'españa', 'valencia': 'españa',
+    'sevilla': 'españa', 'bilbao': 'españa', 'granada': 'españa',
+    'alicante': 'españa', 'murcia': 'españa', 'zaragoza': 'españa',
+    'segovia': 'españa', 'málaga': 'españa', 'malaga': 'españa',
+    
+    // Argentina
+    'buenos aires': 'argentina', 'córdoba': 'argentina', 'rosario': 'argentina',
+    'mendoza': 'argentina', 'caba': 'argentina',
+    
+    // México
+    'ciudad de méxico': 'méxico', 'cdmx': 'méxico', 'guadalajara': 'méxico',
+    'monterrey': 'méxico', 'cancún': 'méxico', 'cancun': 'méxico',
+    
+    // Resto de países
+    'lima': 'perú', 'callao': 'perú', 'cusco': 'perú',
+    'santiago': 'chile', 'valparaíso': 'chile', 'valparaiso': 'chile',
+    'viña del mar': 'chile', 'viña del mar': 'chile',
+    'new york': 'estados unidos', 'los angeles': 'estados unidos',
+    'chicago': 'estados unidos', 'miami': 'estados unidos',
+    'texas': 'estados unidos', 'florida': 'estados unidos',
+    'california': 'estados unidos',
+    'parís': 'francia', 'paris': 'francia', 'lyon': 'francia',
+    'marsella': 'francia',
+    'roma': 'italia', 'milán': 'italia', 'milan': 'italia',
+    'venecia': 'italia', 'florencia': 'italia',
+    'berlín': 'alemania', 'berlin': 'alemania', 'múnich': 'alemania',
+    'munich': 'alemania', 'hamburgo': 'alemania',
+    'londres': 'reino unido', 'manchester': 'reino unido',
+    'liverpool': 'reino unido', 'edimburgo': 'reino unido',
+    'tokio': 'japón', 'osaka': 'japón', 'kyoto': 'japón'
   };
-
-  const paisLower = pais.toLowerCase();
-  return acortamientos[paisLower] || acortamientos.default;
+  
+  // Buscar coincidencias de ciudades
+  for (const [ciudad, pais] of Object.entries(mappingCiudades)) {
+    if (lugarLower.includes(ciudad)) {
+      return pais;
+    }
+  }
+  
+  // Si no encontramos nada, devolver "Desconocido"
+  return 'Desconocido';
 }
 
 document.addEventListener("DOMContentLoaded", initIndex);
+</script>
