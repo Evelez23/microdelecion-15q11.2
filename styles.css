@@ -431,6 +431,18 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  @media (max-width: 768px) {
+  .hero-flex {
+    flex-direction: column;
+  }
+  
+  .hero-content {
+    order: 2;
+  }
+  
+  .hero-image {
+    order: 1;
+    margin-bottom: 2rem;
 }
 
 .icono-dna {
