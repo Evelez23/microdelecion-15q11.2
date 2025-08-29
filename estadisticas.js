@@ -261,3 +261,30 @@ function detectarPais(lugar) {
 }
 
 document.addEventListener('DOMContentLoaded', initStats);
+
+<CardHeader><CardTitle>Distribución geográfica</CardTitle></CardHeader>
+            <CardContent>
+                {loading || !stats?.paisesData.length ? <p>Cargando datos de países...</p> : (
+                    <div className="space-y-4">
+                        {stats.paisesData.map(pais => (
+                            <div key={pais.nombre} className="rounded-lg bg-white/5 p-4">
+                                <h4 className="flex items-center gap-2 text-lg font-bold">
+                                    <span className="text-2xl">{pais.bandera}</span>
+                                    {pais.nombre}
+                                    <span className="text-sm font-normal text-muted-foreground">({pais.total} caso{pais.total > 1 ? 's' : ''})</span>
+                                </h4>
+                                {pais.ciudades.length > 0 && (
+                                    <ul className="mt-2 ml-10 grid grid-cols-2 gap-x-4 gap-y-1 sm:grid-cols-3 md:grid-cols-4">
+                                        {pais.ciudades.map(ciudad => (
+                                            <li key={ciudad.nombre} className="text-sm text-muted-foreground">
+                                                {ciudad.nombre}: <span className="font-semibold text-foreground">{ciudad.count}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </CardContent>
+        </Card>
