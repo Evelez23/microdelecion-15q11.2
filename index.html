@@ -6,7 +6,6 @@
     <title>Microdeleción 15q11.2 – Portal Comunitario</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        /* styles.css - Manteniendo todos tus estilos originales */
         :root {
             --bg: #161b2e;
             --card: #0f1730;
@@ -295,7 +294,6 @@
             font-size: 0.9rem;
         }
 
-        /* Estilos para países */
         .paises-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
@@ -348,7 +346,6 @@
             font-style: italic;
         }
 
-        /* Estilos para pinturas */
         .pintura-oleo {
             border-radius: 16px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
@@ -365,7 +362,6 @@
             font-size: 0.9em;
         }
 
-        /* Responsive adjustments */
         @media (max-width: 768px) {
             .nav .inner {
                 flex-direction: column;
@@ -408,6 +404,31 @@
             .container {
                 padding: 16px;
             }
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--muted);
+        }
+        
+        .error {
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid var(--danger);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            text-align: center;
+            margin: 1rem 0;
+        }
+        
+        .error button {
+            margin-top: 1rem;
+            background: var(--danger);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
         }
     </style>
 </head>
@@ -455,24 +476,36 @@
             
             <div class="hero-image">
                 <img src="https://raw.githubusercontent.com/Evelez23/microdelecion-15q11.2/refs/heads/main/img/82526dd8-8147-48ea-88dc-700b6a49ebf8.webp" 
-                     alt="Mi hijo empujando su caminadora - cada pequeño paso es una victoria" 
+                     alt="Mi hijo empuzando su caminadora - cada pequeño paso es una victoria" 
                      class="pintura-oleo">
                 <p class="pie-foto">Cada pequeño paso es una victoria - Familia 15q11.2</p>
             </div>
         </div>
 
         <div class="container">
-            <div class="cards" id="kpis"></div>
+            <div id="loading" class="loading">
+                <p>Cargando datos actualizados...</p>
+            </div>
+            
+            <div id="error-message" class="error" style="display: none;">
+                <h3>Error al cargar los datos</h3>
+                <p>No se pudieron cargar los datos desde el repositorio. Por favor, intenta nuevamente.</p>
+                <button onclick="window.location.reload()">Reintentar</button>
+            </div>
 
-            <div class="grid-2">
-                <div class="panel">
-                    <h3>Distribución por edades</h3>
-                    <canvas id="chartAges" height="140"></canvas>
-                </div>
-                <div class="panel">
-                    <h3>Presencia internacional</h3>
-                    <div id="paises-container" class="paises-grid">
-                        <div class="pais-loading">Cargando países...</div>
+            <div id="content" style="display: none;">
+                <div class="cards" id="kpis"></div>
+
+                <div class="grid-2">
+                    <div class="panel">
+                        <h3>Distribución por edades</h3>
+                        <canvas id="chartAges" height="140"></canvas>
+                    </div>
+                    <div class="panel">
+                        <h3>Presencia internacional</h3>
+                        <div id="paises-container" class="paises-grid">
+                            <div class="pais-loading">Cargando países...</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -486,49 +519,59 @@
     <footer class="footer">© 2025 | Comunidad de Familias 15q11.2</footer>
 
     <script>
-        // Datos de ejemplo basados en lo que mencionaste
-        const data = [
-            { __origen: "validado", localizacion: "Oviedo, Asturias, España", edad: "5" },
-            { __origen: "validado", localizacion: "Gijón, Asturias, España", edad: "8" },
-            { __origen: "validado", localizacion: "Asturias, España", edad: "12" },
-            { __origen: "validado", localizacion: "Madrid, España", edad: "3" },
-            { __origen: "validado", localizacion: "Barcelona, España", edad: "15" },
-            { __origen: "validado", localizacion: "No especificada", edad: "7" },
-            { __origen: "validado", localizacion: "Tegucigalpa, Honduras", edad: "19" },
-            { __origen: "validado", localizacion: "Buenos Aires, Argentina", edad: "22" },
-            // Añadiendo más casos españoles para llegar a 27
-            { __origen: "validado", localizacion: "Valencia, España", edad: "6" },
-            { __origen: "validado", localizacion: "Sevilla, España", edad: "10" },
-            { __origen: "validado", localizacion: "Málaga, España", edad: "14" },
-            { __origen: "validado", localizacion: "Zaragoza, España", edad: "9" },
-            { __origen: "validado", localizacion: "Murcia, España", edad: "11" },
-            { __origen: "validado", localizacion: "Palma de Mallorca, España", edad: "13" },
-            { __origen: "validado", localizacion: "Las Palmas, España", edad: "16" },
-            { __origen: "validado", localizacion: "Bilbao, España", edad: "18" },
-            { __origen: "validado", localizacion: "Alicante, España", edad: "20" },
-            { __origen: "validado", localizacion: "Córdoba, España", edad: "22" },
-            { __origen: "validado", localizacion: "Valladolid, España", edad: "24" },
-            { __origen: "validado", localizacion: "Vigo, España", edad: "26" },
-            { __origen: "validado", localizacion: "Gijón, España", edad: "28" },
-            { __origen: "validado", localizacion: "Hospitalet, España", edad: "30" },
-            { __origen: "validado", localizacion: "La Coruña, España", edad: "32" },
-            { __origen: "validado", localizacion: "Granada, España", edad: "34" },
-            { __origen: "validado", localizacion: "Elche, España", edad: "36" },
-            { __origen: "validado", localizacion: "Oviedo, España", edad: "38" },
-            { __origen: "validado", localizacion: "Santa Cruz de Tenerife, España", edad: "40" },
-            { __origen: "validado", localizacion: "Pamplona, España", edad: "42" },
-            { __origen: "validado", localizacion: "Almería, España", edad: "44" },
-            { __origen: "validado", localizacion: "Salamanca, España", edad: "46" },
-            { __origen: "validado", localizacion: "Logroño, España", edad: "48" },
-            { __origen: "validado", localizacion: "Cádiz, España", edad: "50" },
-            { __origen: "validado", localizacion: "Santander, España", edad: "52" },
-            { __origen: "validado", localizacion: "Jaén, España", edad: "54" },
-            { __origen: "validado", localizacion: "Lleida, España", edad: "56" },
-            { __origen: "validado", localizacion: "Tarragona, España", edad: "58" },
-            { __origen: "validado", localizacion: "Badajoz, España", edad: "60" }
-        ];
-
-        function initIndex() {
+        // URLs de los archivos REALES en GitHub
+        const CASOS_VALIDADOS_URL = 'https://raw.githubusercontent.com/Evelez23/microdelecion-15q11.2/main/data/casos_validados.json';
+        const CASOS_NO_VALIDADOS_URL = 'https://raw.githubusercontent.com/Evelez23/microdelecion-15q11.2/main/data/casos_no_validados.json';
+        
+        // Elementos del DOM
+        const loadingElement = document.getElementById('loading');
+        const errorElement = document.getElementById('error-message');
+        const contentElement = document.getElementById('content');
+        
+        // Función para cargar datos desde GitHub
+        async function loadData() {
+            try {
+                loadingElement.style.display = 'block';
+                errorElement.style.display = 'none';
+                contentElement.style.display = 'none';
+                
+                // Cargar ambos archivos
+                const [responseValidados, responseNoValidados] = await Promise.all([
+                    fetch(CASOS_VALIDADOS_URL),
+                    fetch(CASOS_NO_VALIDADOS_URL)
+                ]);
+                
+                if (!responseValidados.ok || !responseNoValidados.ok) {
+                    throw new Error('Error al cargar los archivos');
+                }
+                
+                const [casosValidados, casosNoValidados] = await Promise.all([
+                    responseValidados.json(),
+                    responseNoValidados.json()
+                ]);
+                
+                // Combinar los datos y añadir propiedad __origen
+                const data = [
+                    ...casosValidados.map(caso => ({ ...caso, __origen: "validado" })),
+                    ...casosNoValidados.map(caso => ({ ...caso, __origen: "no_validado" }))
+                ];
+                
+                initIndex(data);
+                
+            } catch (error) {
+                console.error('Error cargando datos:', error);
+                loadingElement.style.display = 'none';
+                errorElement.style.display = 'block';
+                contentElement.style.display = 'none';
+            }
+        }
+        
+        function initIndex(data) {
+            // Ocultar loading y mostrar contenido
+            loadingElement.style.display = 'none';
+            errorElement.style.display = 'none';
+            contentElement.style.display = 'block';
+            
             // ---- KPIs ----
             const total = data.length;
             const validados = data.filter(c => c.__origen === "validado").length;
@@ -668,10 +711,7 @@
             const paisNormalizado = pais.toLowerCase().trim();
             
             const banderas = {
-                // España y variantes
                 'españa': '🇪🇸', 'espana': '🇪🇸', 'spain': '🇪🇸',
-                
-                // Latinoamérica
                 'argentina': '🇦🇷',
                 'honduras': '🇭🇳',
                 'méxico': '🇲🇽', 'mexico': '🇲🇽',
@@ -682,8 +722,6 @@
                 'ecuador': '🇪🇨',
                 'uruguay': '🇺🇾',
                 'brasil': '🇧🇷',
-                
-                // Resto del mundo
                 'estados unidos': '🇺🇸', 'usa': '🇺🇸', 'eeuu': '🇺🇸',
                 'canadá': '🇨🇦', 'canada': '🇨🇦',
                 'francia': '🇫🇷',
@@ -691,7 +729,6 @@
                 'alemania': '🇩🇪',
                 'reino unido': '🇬🇧', 'inglaterra': '🇬🇧',
                 'japón': '🇯🇵', 'japon': '🇯🇵',
-                
                 'desconocido': '🌍',
                 'default': '🌍'
             };
@@ -731,11 +768,10 @@
                 'segovia': 'españa', 'málaga': 'españa', 'malaga': 'españa',
                 
                 // Argentina
-                'buenos aires': 'argentina', 'córdoba': 'argentina', 'rosario': 'argentina',
-                'mendoza': 'argentina', 'caba': 'argentina',
+                'buenos aires': 'argentina',
                 
                 // Honduras
-                'tegucigalpa': 'honduras', 'san pedro sula': 'honduras', 'la ceiba': 'honduras'
+                'tegucigalpa': 'honduras'
             };
             
             // Buscar coincidencias de ciudades
@@ -749,7 +785,8 @@
             return 'Desconocido';
         }
 
-        document.addEventListener("DOMContentLoaded", initIndex);
+        // Iniciar la carga de datos cuando el documento esté listo
+        document.addEventListener("DOMContentLoaded", loadData);
     </script>
 </body>
 </html>
